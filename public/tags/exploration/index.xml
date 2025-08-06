@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Exploration on PlayPixelLabs</title>
+    <link>http://localhost:1313/tags/exploration/</link>
+    <description>Recent content in Exploration on PlayPixelLabs</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 06 May 2025 14:00:00 +0530</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/exploration/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HELO</title>
+      <link>http://localhost:1313/games/example-game/</link>
+      <pubDate>Tue, 06 May 2025 14:00:00 +0530</pubDate>
+      <guid>http://localhost:1313/games/example-game/</guid>
+      <description>&lt;p&gt;Idle Explorers is an engaging adventure game where you send out explorers to discover new lands and collect resources. Upgrade your base, unlock new characters, and delve deeper into mysterious dungeons.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Idle Explorers</title>
+      <link>http://localhost:1313/games/idle-explorers/</link>
+      <pubDate>Tue, 06 May 2025 14:00:00 +0530</pubDate>
+      <guid>http://localhost:1313/games/idle-explorers/</guid>
+      <description>&lt;p&gt;Idle Explorers is an engaging adventure game where you send out explorers to discover new lands and collect resources. Upgrade your base, unlock new characters, and delve deeper into mysterious dungeons.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

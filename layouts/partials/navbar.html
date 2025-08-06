@@ -1,0 +1,29 @@
+<nav class="navbar">
+  <div class="nav-links">
+    {{ $isAllActive := eq $.Page.RelPermalink "/" }}
+
+    {{ if $isAllActive }}
+      <button class="nav-item active" data-filter="all">All</button>
+    {{ else }}
+      <a href="/">
+        <button class="nav-item" data-filter="all">All</button>
+      </a>
+    {{ end }}
+
+    {{ range $category := .Site.Taxonomies.categories.ByCount }}
+      {{ $isActive := eq $category.Page.Permalink $.Page.Permalink }}
+
+      {{ if $isActive }}
+        <button class="nav-item active" data-filter="{{ $category.Term | urlize }}">
+          {{ $category.Term | humanize }}
+        </button>
+      {{ else }}
+        <a href="{{ $category.Page.Permalink }}">
+          <button class="nav-item" data-filter="{{ $category.Term | urlize }}">
+            {{ $category.Term | humanize }}
+          </button>
+        </a>
+      {{ end }}
+    {{ end }}
+  </div>
+</nav>

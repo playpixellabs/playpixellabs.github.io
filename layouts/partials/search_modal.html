@@ -1,0 +1,67 @@
+<div id="search-results-modal" class="search-results-modal">
+    <div class="search-modal-content">
+        <button id="close-search-modal" class="close-btn">&times;</button>
+        <h2 class="category-title">Search Results</h2>
+        <div id="search-results-grid" class="game-grid">
+            <!-- Search results will be injected here by JavaScript -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // Sample: Assuming you have a search input with id "search-input"
+const modal = document.getElementById('search-results-modal');
+const searchGrid = document.getElementById('search-results-grid');
+const closeBtn = document.getElementById('close-search-modal');
+
+closeBtn.addEventListener('click', () => {
+  modal.style.display = 'none';
+});
+
+// Example data: Replace with your real game data or fetch from JSON
+const gamesData = [
+  { title: 'Idle Explorers', permalink: '/games/idle-explorers', categories: ['adventure'], image: '/images/idle-explorers.jpg' },
+  { title: 'Om Nom Run', permalink: '/games/om-nom-run', categories: ['arcade'], image: '/images/om-nom-run.jpg' },
+  // add all your games here or fetch dynamically
+];
+
+function renderSearchResults(results) {
+  searchGrid.innerHTML = ''; // Clear previous results
+  if (results.length === 0) {
+    searchGrid.innerHTML = '<p>No results found.</p>';
+    return;
+  }
+  results.forEach(game => {
+    const card = document.createElement('div');
+    card.className = 'game-card';
+    card.innerHTML = `
+      <a href="${game.permalink}">
+        <img src="${game.image}" alt="${game.title}">
+        <h3>${game.title}</h3>
+      </a>
+    `;
+    searchGrid.appendChild(card);
+  });
+}
+
+function performSearch(query) {
+  const filtered = gamesData.filter(game => 
+    game.title.toLowerCase().includes(query.toLowerCase()) ||
+    game.categories.some(cat => cat.toLowerCase().includes(query.toLowerCase()))
+  );
+  renderSearchResults(filtered);
+  modal.style.display = 'block';
+}
+
+// Example: listen to input or form submit and call performSearch
+const searchInput = document.getElementById('search-input');
+searchInput.addEventListener('input', (e) => {
+  const query = e.target.value.trim();
+  if (query.length > 2) { // only search if 3+ characters
+    performSearch(query);
+  } else {
+    modal.style.display = 'none';
+  }
+});
+
+</script>

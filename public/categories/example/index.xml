@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Example on PlayPixelLabs</title>
+    <link>http://localhost:1313/categories/example/</link>
+    <description>Recent content in Example on PlayPixelLabs</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 06 Mar 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/example/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Example Game</title>
+      <link>http://localhost:1313/games/example-game/</link>
+      <pubDate>Thu, 06 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/games/example-game/</guid>
+      <description>&lt;p&gt;This is a test game to ensure that the content is being rendered correctly on the home page. If you can see this game card, everything is working as expected!&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

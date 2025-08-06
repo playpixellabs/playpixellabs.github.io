@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PlayPixelLabs</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on PlayPixelLabs</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 06 Aug 2025 14:10:00 +0530</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pirate Poker</title>
+      <link>http://localhost:1313/games/pirate-poker/</link>
+      <pubDate>Wed, 06 Aug 2025 14:10:00 +0530</pubDate>
+      <guid>http://localhost:1313/games/pirate-poker/</guid>
+      <description>&lt;p&gt;A unique twist on classic poker, set in the high seas! Play against other pirates, bluff your way to victory, and claim the ultimate treasure. Do you have what it takes to be the most feared pirate poker player?&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Om Nom Run</title>
+      <link>http://localhost:1313/games/om-nom-run/</link>
+      <pubDate>Wed, 06 Aug 2025 14:05:00 +0530</pubDate>
+      <guid>http://localhost:1313/games/om-nom-run/</guid>
+      <description>&lt;p&gt;Join Om Nom and Om Nelle on a thrilling adventure through the bustling streets of Nomville, the treacherous rooftops, and the mysterious underground tunnels. Collect candies, avoid obstacles, and unlock new characters!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Mahjong Solitaire</title>
+      <link>http://localhost:1313/games/mahjang-solitarire/</link>
+      <pubDate>Wed, 06 Aug 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/games/mahjang-solitarire/</guid>
+      <description>&lt;p&gt;Enjoy the timeless classic Mahjong Solitaire. Match identical tiles to clear the board and relax with hundreds of layouts. A perfect game to unwind and challenge your mind.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Jewel Academy</title>
+      <link>http://localhost:1313/games/jewel-academy/</link>
+      <pubDate>Fri, 01 Aug 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/games/jewel-academy/</guid>
+      <description>&lt;p&gt;Match sparkling jewels in this enchanting puzzle game. Blast through challenging levels, use powerful boosters, and become a master of the Jewel Academy!&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>HELO</title>
+      <link>http://localhost:1313/games/example-game/</link>
+      <pubDate>Tue, 06 May 2025 14:00:00 +0530</pubDate>
+      <guid>http://localhost:1313/games/example-game/</guid>
+      <description>&lt;p&gt;Idle Explorers is an engaging adventure game where you send out explorers to discover new lands and collect resources. Upgrade your base, unlock new characters, and delve deeper into mysterious dungeons.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Idle Explorers</title>
+      <link>http://localhost:1313/games/idle-explorers/</link>
+      <pubDate>Tue, 06 May 2025 14:00:00 +0530</pubDate>
+      <guid>http://localhost:1313/games/idle-explorers/</guid>
+      <description>&lt;p&gt;Idle Explorers is an engaging adventure game where you send out explorers to discover new lands and collect resources. Upgrade your base, unlock new characters, and delve deeper into mysterious dungeons.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

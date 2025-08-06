@@ -1,0 +1,21 @@
+baseURL = 'http://localhost:1313/'
+languageCode = 'en-us'
+title = 'PlayPixelLabs'
+
+# theme = "" # We are using direct layouts, not a separate theme
+
+# Enable JSON output for the search index
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[mediaTypes."application/json"]
+  suffixes = ["json"]
+
+[outputFormats.JSON]
+  mediaType = "application/json"
+  baseName = "search" # This will create search.json
+
+# Configure taxonomies (categories and tags)
+[taxonomies]
+  category = "categories"
+  tag = "tags"

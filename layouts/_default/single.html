@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+{{ partial "head.html" . }}
+<body>
+    {{ partial "header.html" . }}
+    {{ partial "navbar.html" . }}
+
+    <main class="main-content">
+        <div class="single-game-container">
+            <h1 class="category-title">{{ .Title }}</h1>
+            <img src="{{ .Params.image }}" alt="{{ .Title }}" class="single-game-image">
+            <div class="single-game-meta">
+                <p><strong>Categories:</strong> 
+                    {{- range .Params.categories -}}
+                        <a href="{{ "/categories/" | relURL }}{{ . | urlize }}" class="nav-item">{{ . }}</a>
+                    {{- end -}}
+                </p>
+                <p><strong>Tags:</strong> 
+                    {{- range .Params.tags -}}
+                        <a href="{{ "/tags/" | relURL }}{{ . | urlize }}" class="nav-item">{{ . }}</a>
+                    {{- end -}}
+                </p>
+            </div>
+            <div class="single-game-content">
+                {{ .Content }}
+            </div>
+        </div>
+    </main>
+</body>
+</html>

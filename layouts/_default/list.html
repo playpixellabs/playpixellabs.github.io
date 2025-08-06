@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+{{ partial "head.html" . }}
+<body>
+
+    {{ partial "header.html" . }}
+    {{ partial "navbar.html" . }}
+
+    <main class="main-content">
+        {{/*  <h1 class="page-title">{{ .Title }}</h1>  */}}
+
+        {{- if .IsHome -}}
+            {{/* This section is for the homepage, which lists all categories */}}
+            {{- partial "homepage_content.html" . -}}
+        {{- else if eq .Kind "taxonomy" -}}
+            {{/* This section lists all terms of a taxonomy (e.g., /categories/ or /tags/) */}}
+            <section class="taxonomy-list">
+                <h2 class="category-title">All {{ .Title }}</h2>
+                <div class="tag-cloud">
+                    {{- range .Data.Terms.ByCount -}}
+                        <a href="{{ .Page.Permalink }}" class="nav-item">
+                            {{ .Page.Title }} ({{ .Count }})
+                        </a>
+                    {{- end -}}
+                </div>
+            </section>
+        {{- else if eq .Kind "term" -}}
+            {{/* This section lists all pages for a specific term (e.g., /categories/adventure/) */}}
+            <section class="game-category-section">
+                <h2 class="category-title">Games in {{ .Title | humanize }}</h2>
+                <div class="game-grid">
+                    {{- range .Paginator.Pages -}}
+                        {{- partial "game_card.html" . -}}
+                    {{- end -}}
+                </div>
+            </section>
+        {{- else -}}
+            {{/* Default behavior, shows a list of pages */}}
+            <section class="game-category-section">
+                <h2 class="category-title">All Games</h2>
+                <div class="game-grid">
+                    {{- range .Paginator.Pages -}}
+                        {{- partial "game_card.html" . -}}
+                    {{- end -}}
+                </div>
+            </section>
+        {{- end -}}
+    </main>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>

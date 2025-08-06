@@ -1,0 +1,56 @@
+<div class="highlight-games-section">
+    {{/*  <div class="highlight-game">
+        <img src="https://via.placeholder.com/150x100?text=Highlight+1" alt="Game highlight">
+    </div>
+    <div class="highlight-game">
+        <img src="https://via.placeholder.com/150x100?text=Highlight+2" alt="Game highlight">
+    </div>
+    <div class="highlight-game">
+        <img src="https://via.placeholder.com/150x100?text=Highlight+3" alt="Game highlight">
+    </div>
+    <div class="highlight-game">
+        <img src="https://via.placeholder.com/150x100?text=Highlight+4" alt="Game highlight">
+    </div>
+    <div class="highlight-game">
+        <img src="https://via.placeholder.com/150x100?text=Highlight+5" alt="Game highlight">
+    </div>
+    <div class="highlight-game">
+        <img src="https://via.placeholder.com/150x100?text=Highlight+6" alt="Game highlight">
+    </div>
+    <div class="highlight-game">
+        <img src="https://via.placeholder.com/150x100?text=Highlight+7" alt="Game highlight">
+    </div>
+    <div class="highlight-game">
+        <img src="https://via.placeholder.com/150x100?text=Highlight+8" alt="Game highlight">
+    </div>
+</div>  */}}
+
+<div id="all-games-container">
+    {{/*  {{ $games := where .Site.RegularPages "Type" "games" }}  */}}
+    {{/*  {{ $games := .Site.RegularPages }}  */}}
+
+    <section class="game-category-section">
+        <h2 class="category-title">All Games</h2>
+        <div class="game-grid" id="all-games-grid">
+            {{/*  {{ len (where .Site.RegularPages "Type" "games") }}  */}}
+            {{ range where .Site.RegularPages "Type" "games" }}
+                {{ partial "game_card.html" . }}
+            {{ end }}
+            {{/*  {{ range where .Site.RegularPages "Section" "games" }}
+                {{ partial "game_card.html" . }}
+            {{ end }}  */}}
+            
+        </div>
+    </section>
+
+    {{/*  {{ range $category := .Site.Taxonomies.categories.ByCount }}
+        <section class="game-category-section">
+            <h2 class="category-title">{{ $category.Term | humanize }} games</h2>
+            <div class="game-grid" id="{{ $category.Term | urlize }}-games">
+                {{ range $game := $category.Pages }}
+                    {{ partial "game_card.html" $game }}
+                {{ end }}
+            </div>
+        </section>  */}}
+    {{/*  {{ end }}  */}}
+</div>
