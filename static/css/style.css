@@ -22,7 +22,7 @@
 }
 
 
-.mona-sans> {
+.mona-sans {
   font-family: "Mona Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 600;
@@ -32,10 +32,17 @@
 }
 
 
-.dm-sans> {
+.dm-sans {
   font-family: "DM Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 600;
+  font-style: normal;
+}
+
+.manrope{
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
   font-style: normal;
 }
 
@@ -43,7 +50,8 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Mona Sans', 'DM Sans' , sans-serif;
+    font-family:  'Manrope','Mona Sans', 'DM Sans' , sans-serif;
+    font-weight: 500;
 }
 
 body {
@@ -58,6 +66,8 @@ body {
     padding: 16px 24px;
     background-color: var(--header-bg);
     background: linear-gradient(135deg, #7451eb 0%, #3a75e3 100%);
+    background: #833AB4;
+background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(29, 96, 253, 1) 31%, rgba(0, 145, 255, 1) 64%, rgba(252, 112, 69, 1) 100%);
 
     color: var(--secondary-bg);
     position: sticky;
@@ -149,6 +159,8 @@ body {
 .navbar {
     /* background-color: var(--header-bg); */
     background: var(--header-gradient);
+    background: #833AB4;
+background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(29, 96, 253, 1) 31%, rgba(0, 145, 255, 1) 64%, rgba(252, 112, 69, 1) 100%);
     padding: 8px 16px;
     padding-right: 0;
     position: sticky;
