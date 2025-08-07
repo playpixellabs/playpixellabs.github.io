@@ -19,3 +19,9 @@ title = 'PlayPixelLabs'
 [taxonomies]
   category = "categories"
   tag = "tags"
+
+[params]
+  description = "The best collection of quick, lightweight browser games."
+  keywords = ["games", "browser", "casual"]
+  author = "PlayPixelLabs"
+  googleAnalyticsID = "G-XXXXXXXXXX" # Replace with your actual Google Analytics ID

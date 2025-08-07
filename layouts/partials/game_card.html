@@ -1,6 +1,6 @@
 <div class="game-card" data-title="{{ .Title }}" data-genre="{{ range .Params.categories }}{{ . }} {{ end }}{{ range .Params.tags }}{{ . }} {{ end }}">
     <a href="{{ .Permalink }}">
-        <img src="{{ .Params.image | default "https://via.placeholder.com/200x120?text=Game+Image" }}" alt="{{ .Title }}">
+        <img src="{{ .Params.image }}" alt="{{ .Title }}">
         <p class="game-title">{{ .Title }}</p>
     </a>
 </div>
