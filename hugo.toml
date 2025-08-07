@@ -24,4 +24,5 @@ title = 'PlayPixelLabs'
   description = "The best collection of quick, lightweight browser games."
   keywords = ["games", "browser", "casual"]
   author = "PlayPixelLabs"
+  image = "https://yt3.googleusercontent.com/3FLMvdMbKO73nwGgYJ2ajLJfZ2eoao7d5dwiPEWD6vtWS4yWXzs3OpGnRkl0ELpKki3VCz2C8-8=w1060-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj"
   googleAnalyticsID = "G-XXXXXXXXXX" # Replace with your actual Google Analytics ID
