@@ -25,6 +25,29 @@
                 {{ .Content }}
             </div>
         </div>
+        {{ $current := . }}
+{{ $relatedGames := (where (where .Site.RegularPages "Type" "games") "Permalink" "ne" .Permalink) }} 
+
+{{ if $current.Params.categories }}
+  {{ $relatedGames = where $relatedGames "Params.categories" "intersect" $current.Params.categories | first 6 }}
+{{ else }}
+  {{ $relatedGames = first 6 $relatedGames }}
+{{ end }}
+
+{{ if gt (len $relatedGames) 0 }}
+  <section class="related-games">
+    <h2>Related Games</h2>
+    <div class="related-games-grid">
+      {{ range $relatedGames }}
+        <a href="{{ .RelPermalink }}" class="related-game-card" title="{{ .Title }}">
+          <img src="{{ with .Params.image }}{{ . }}{{ else }}/images/default-game.jpg{{ end }}" alt="{{ .Title }}">
+          <h3>{{ .Title }}</h3>
+        </a>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}
+
     </main>
 </body>
 </html>
