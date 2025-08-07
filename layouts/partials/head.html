@@ -35,7 +35,7 @@
 <meta name="author" content="{{ with .Params.author }}{{ . }}{{ else }}{{ .Site.Params.author }}{{ end }}">
 
 <meta property="og:title" content="{{ .Title }} | {{ .Site.Title }}">
-<meta name="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . | plainify | truncate 160 }}{{ else }}{{ .Site.Params.description }}{{ end }}{{ end }}">
+<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . | plainify | truncate 160 }}{{ else }}{{ .Site.Params.description }}{{ end }}{{ end }}">
 <meta property="og:image" content="{{ with .Params.image }}{{ . }}{{ else }}{{ .Site.Params.image }}{{ end }}">
 
 <meta name="twitter:card" content="summary_large_image">
