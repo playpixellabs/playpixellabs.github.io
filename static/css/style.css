@@ -70,7 +70,7 @@ body {
 background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(29, 96, 253, 1) 31%, rgba(0, 145, 255, 1) 64%, rgba(252, 112, 69, 1) 100%);
 
     color: var(--secondary-bg);
-    position: sticky;
+    /* position: sticky; */
     top: 0;
     z-index: 1000;
 }
@@ -164,7 +164,8 @@ background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(29, 96, 253, 1
     padding: 8px 16px;
     padding-right: 0;
     position: sticky;
-    top: 60px;
+    top: 0;
+    /* top: 60px; */
     /* Position below the header */
     z-index: 999;
 }
