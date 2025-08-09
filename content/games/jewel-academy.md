@@ -8,3 +8,8 @@ categories: ["Puzzle"]
 tags: ["match-3", "gems", "relaxing"]
 ---
 Match sparkling jewels in this enchanting puzzle game. Blast through challenging levels, use powerful boosters, and become a master of the Jewel Academy!
+
+
+  {{< game_container2 ratio="9:16" >}}
+    {{< stick_hero >}}
+  {{</ game_container2 >}}
