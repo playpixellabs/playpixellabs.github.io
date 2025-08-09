@@ -154,7 +154,7 @@ body {
 .user-actions button {
     background: var(--nav-bg);
     border: none;
-    padding: 12px;
+    padding: 6px;
     border-radius: 50%;
     cursor: pointer;
     margin-left: 8px;
@@ -169,6 +169,8 @@ body {
 }
 
 .navbar {
+    display: flex;
+    justify-content: space-evenly;
     /* background-color: var(--header-bg); */
     background: var(--header-gradient);
     /* background: #833AB4; */
@@ -176,7 +178,6 @@ body {
     padding: 16px 16px;
     padding-right: 0;
     padding-left: 0;
-    /* position: relative; */
     /* top: 0; */
     /* top: 60px; */
     /* Position below the header */
@@ -368,7 +369,7 @@ body {
     }
 
     .navbar {
-        padding: 16px 14rem;
+        padding: 16px 18rem;
     }
 }
 
@@ -391,8 +392,8 @@ body {
     }
 
     .navbar {
-        padding: 16px 122px;
-        padding: 16px 14rem;
+        /* padding: 16px 122px; */
+        /* padding: 16px 14rem; */
     }
 
     .main-content {
