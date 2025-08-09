@@ -9,6 +9,6 @@ tags: ["poker", "pirates", "multiplayer"]
 A unique twist on classic poker, set in the high seas! Play against other pirates, bluff your way to victory, and claim the ultimate treasure. Do you have what it takes to be the most feared pirate poker player?
 
 
-  {{< game_container >}}
+  {{< game_container height="80vh" width="80vw" >}}
     {{< stick_hero >}}
   {{</ game_container >}}
