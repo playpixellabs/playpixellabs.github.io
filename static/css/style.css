@@ -230,7 +230,7 @@ body {
 }
 
 .main-content {
-    padding: 16px;
+    padding: 0;
 }
 
 .highlight-games-section {
@@ -256,6 +256,8 @@ body {
 
 .game-category-section {
     margin-bottom: 32px;
+    padding: 16px;
+    padding-top: 0;
 }
 
 .category-title {
@@ -398,6 +400,10 @@ body {
 
     .main-content {
         padding: 32px 48px;
+    }
+
+    .game-category-section{
+        padding: 0;
     }
 
     .game-grid {

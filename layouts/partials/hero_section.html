@@ -1,0 +1,89 @@
+<div class="hero_section">
+  {{/*
+  <h1>{{ .Title }}</h1>
+  */}}
+  <div class="hero-cards">
+    {{ range where .Site.RegularPages "Type" "games" }} {{ partial
+    "hero_card.html" . }} {{ end }}
+  </div>
+</div>
+
+<style>
+  .hero_section {
+    background-color: #f0f0f0; /* Example background color */
+    text-align: center;
+    padding: 0px;
+  }
+
+  .hero_section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+
+  .hero-cards {
+    display: flex; /* Makes the cards line up horizontally */
+    overflow-x: auto; /* Enables horizontal scrolling */
+    flex-wrap: nowrap; /* Prevents wrapping to the next line */
+    gap: 20px; /* Adds space between the cards */
+    padding-bottom: 20px; /* Adds some space for the scrollbar */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #888 #f1f1f1; /* For Firefox */
+    -webkit-overflow-scrolling: touch; /* Improves scrolling on iOS */
+  }
+
+  /* For WebKit browsers (Chrome, Safari) */
+  .hero-cards::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  .hero-cards::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  .hero-cards::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+
+  .hero-cards::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  .hero-card {
+    flex-shrink: 0; /* Prevents the card from shrinking */
+    width: 300px; /* Gives the card a fixed width */
+    padding-right: 16px; /* Adds space to the right of each card */
+  }
+  /*
+  The hero_card.html partial would need its own styling to define
+  the card's appearance (e.g., width, padding, box-shadow, etc.).
+  For example:
+
+  .hero_card {
+    flex-shrink: 0; // Prevents cards from shrinking
+    width: 300px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+  }
+*/
+
+  /* -------------------- */
+  /* Responsive CSS for smaller screens */
+  /* -------------------- */
+
+  /* Responsive Design */
+  @media (min-width: 768px) {
+    .hero_section {
+      padding: 32px 48px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-card {
+      width: 90%; /* Makes the card width responsive */
+      max-width: 400px; /* Sets a maximum width for larger screens */
+    }
+  }
+</style>

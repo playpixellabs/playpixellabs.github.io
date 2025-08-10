@@ -1,0 +1,86 @@
+<div class="hero-card" data-title="{{ .Title }}" data-genre="{{ range .Params.categories }}{{ . }} {{ end }}{{ range .Params.tags }}{{ . }} {{ end }}">
+    <a href="{{ .Permalink }}">
+        <img src="{{ .Params.image }}" alt="{{ .Title }}">
+        <p class="game-title">{{ .Title }}</p>
+        <button class="play_btn">Play</button>
+    </a>
+</div>
+
+<style>
+    .hero-card {
+  position: relative;
+  width: 250px; /* Adjust the card width as needed */
+  height: 350px; /* Adjust the card height as needed */
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-card:hover {
+  transform: translateY(-10px); /* Lifts the card slightly on hover */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.hero-card a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.hero-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the entire card without distortion */
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.hero-card:hover img {
+  transform: scale(1.05); /* Slightly zooms in the image on hover */
+}
+
+.hero-card .game-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+  transform: translateY(100%); /* Hides the title initially */
+  transition: transform 0.3s ease;
+}
+
+.hero-card:hover .game-title {
+  transform: translateY(0); /* Slides the title up on hover */
+}
+
+.hero-card .play_btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0); /* Hides and centers the button initially */
+  background-color: #007bff; /* Example button color */
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 30px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 10;
+}
+
+.hero-card:hover .play_btn {
+  transform: translate(-50%, -50%) scale(1); /* Reveals and scales the button on hover */
+  opacity: 1;
+}
+</style>
