@@ -26,6 +26,7 @@
     flex-wrap: nowrap; /* Prevents wrapping to the next line */
     gap: 20px; /* Adds space between the cards */
     padding-bottom: 20px; /* Adds some space for the scrollbar */
+
     scrollbar-width: thin; /* For Firefox */
     scrollbar-color: #888 #f1f1f1; /* For Firefox */
     -webkit-overflow-scrolling: touch; /* Improves scrolling on iOS */
@@ -52,7 +53,6 @@
   .hero-card {
     flex-shrink: 0; /* Prevents the card from shrinking */
     width: 300px; /* Gives the card a fixed width */
-    padding-right: 16px; /* Adds space to the right of each card */
   }
   /*
   The hero_card.html partial would need its own styling to define
@@ -73,14 +73,12 @@
   /* Responsive CSS for smaller screens */
   /* -------------------- */
 
-  /* Responsive Design */
-  @media (min-width: 768px) {
-    .hero_section {
-      padding: 32px 48px;
-    }
-  }
-
   @media (max-width: 768px) {
+    .hero-cards {
+      padding-left: 16px;
+      padding-top: 50px;
+    }
+
     .hero-card {
       width: 90%; /* Makes the card width responsive */
       max-width: 400px; /* Sets a maximum width for larger screens */
