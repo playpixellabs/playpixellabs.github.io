@@ -153,8 +153,9 @@ body {
 
 .user-actions button {
     background: var(--nav-bg);
+    background: #334393;
     border: none;
-    padding: 6px;
+    padding: 7px;
     border-radius: 50%;
     cursor: pointer;
     margin-left: 8px;
@@ -162,6 +163,7 @@ body {
 
 .user-actions button svg {
     color: var(--light-text-color);
+    color: #ffffff;
 }
 
 .search-mobile-btn {
@@ -264,6 +266,7 @@ body {
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 16px;
+
 }
 
 .game-grid {
@@ -272,42 +275,7 @@ body {
     gap: 16px;
 }
 
-.game-card {
-    background-color: var(--card-bg);
-    border-radius: var(--border-radius-md);
-    overflow: hidden;
-    box-shadow: var(--card-shadow);
-    transition: transform 0.2s, box-shadow 0.2s;
-    cursor: pointer;
-    text-align: center;
-}
 
-.game-card a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.game-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--card-hover-shadow);
-}
-
-.game-card img {
-    width: 100%;
-    /* height: 100%; */
-    height: auto;
-    height: 120px;
-    aspect-ratio: 16/9;
-    object-fit: cover;
-    display: block;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.game-title {
-    padding: 12px;
-    font-size: 16px;
-    font-weight: 500;
-}
 
 /* Search Results Modal */
 .search-results-modal {
@@ -364,7 +332,7 @@ body {
     cursor: pointer;
 }
 
-@media (min-width:1180px)  {
+@media (min-width:1180px) {
     .header {
         justify-content: space-around;
         padding: 16px 48px;
@@ -402,7 +370,7 @@ body {
         padding: 32px 48px;
     }
 
-    .game-category-section{
+    .game-category-section {
         padding: 0;
     }
 
