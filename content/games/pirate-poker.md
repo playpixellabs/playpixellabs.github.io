@@ -21,3 +21,5 @@ A unique twist on classic poker, set in the high seas! Play against other pirate
   <!-- {{< game_container_3 ratio="4:3" >}}
     {{< game_code >}}
   {{</ game_container_3 >}} -->
+
+  <!-- {{< player src="/path/to/your-video.mp4" ratio="16:9" autoplay="true" >}} -->
