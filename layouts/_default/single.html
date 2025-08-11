@@ -39,10 +39,11 @@
     <h2>Related Games</h2>
     <div class="related-games-grid">
       {{ range $relatedGames }}
-        <a href="{{ .RelPermalink }}" class="related-game-card" title="{{ .Title }}">
+        {{/*  <a href="{{ .RelPermalink }}" class="related-game-card" title="{{ .Title }}">
           <img src="{{ with .Params.image }}{{ . }}{{ else }}/images/default-game.jpg{{ end }}" alt="{{ .Title }}">
           <h3>{{ .Title }}</h3>
-        </a>
+        </a>  */}}
+        {{ partial "game_card.html" . }}
       {{ end }}
     </div>
   </section>
