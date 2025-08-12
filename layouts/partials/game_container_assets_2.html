@@ -1,0 +1,195 @@
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("{{ .id }}");
+    if (!container) return;
+
+    const wrapper = container.parentElement; // .gc-wrapper
+    const normalFullscreenBtn = wrapper.querySelector(
+      ".bottom-toolbar .gc-btn-fullscreen"
+    );
+    const fullscreenFullscreenBtn = wrapper.querySelector(
+      ".overlay-toolbar .gc-btn-fullscreen"
+    );
+    const normalMuteBtn = wrapper.querySelector(".bottom-toolbar .gc-btn-mute");
+    const fullscreenMuteBtn = wrapper.querySelector(
+      ".overlay-toolbar .gc-btn-mute"
+    );
+
+    // Add fullscreen toggle to both buttons
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        container.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    normalFullscreenBtn.addEventListener("click", toggleFullscreen);
+    fullscreenFullscreenBtn.addEventListener("click", toggleFullscreen);
+
+    document.addEventListener("fullscreenchange", () => {
+      const isFull = !!document.fullscreenElement;
+      wrapper.classList.toggle("gc-fullscreen", isFull);
+
+      // Optional: update button labels in both toolbars
+      const labelEls = wrapper.querySelectorAll(".gc-btn-fullscreen span");
+      labelEls.forEach(
+        (el) => (el.textContent = isFull ? "Exit Fullscreen" : "Fullscreen")
+      );
+    });
+
+    // Similar for mute toggle
+    let isMuted = false;
+
+    function toggleMute(clickedBtn) {
+      isMuted = !isMuted;
+
+      // Update both toolbars
+      const allMuteBtns = wrapper.querySelectorAll(".gc-btn-mute");
+      allMuteBtns.forEach((btn) => {
+        btn.querySelector("span").textContent = isMuted ? "Unmute" : "Mute";
+        btn.querySelector(".gc-icon").innerHTML = isMuted
+          ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5L6 9H2v6h4l5 4V5z M15 9l4 4m0-4l-4 4"/>'
+          : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5L6 9H2v6h4l5 4V5z" />';
+      });
+
+      // Mute/unmute <audio> or <video> in the game (if not iframe)
+      const media = container.querySelector("audio, video");
+      if (media) media.muted = isMuted;
+    }
+
+    normalMuteBtn.addEventListener("click", () =>
+      toggleMute(normalMuteBtn /*icon here*/)
+    );
+    fullscreenMuteBtn.addEventListener("click", () =>
+      toggleMute(fullscreenMuteBtn /*icon here*/)
+    );
+  });
+</script>
+
+<style>
+  /* Aspect Ratios */
+  .gc-aspect-16-9 {
+    padding-top: 56.25%;
+  }
+  .gc-aspect-9-16 {
+    padding-top: 177.78%;
+  }
+  .gc-aspect-4-3 {
+    padding-top: 75%;
+  }
+  .gc-aspect-3-4 {
+    padding-top: 133.33%;
+  }
+
+  .gc-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .gc-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    border-radius: 1rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+  }
+
+  .gc-wrapper.gc-fullscreen .gc-container {
+    border-radius: 0;
+  }
+
+  .gc-inner-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  }
+  .gc-game-content {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Fullscreen */
+  .gc-fullscreen {
+    position: fixed !important;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    z-index: 9999;
+  }
+  .gc-fullscreen .gc-toolbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    border-radius: 0;
+  }
+
+  /* Toolbar is now below game, no absolute/fixed */
+  .gc-toolbar {
+    width: 100%;
+    max-width: 800px;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    padding: 0.4rem 0.6rem;
+    box-sizing: border-box;
+    margin-top: 0.3rem;
+    border-radius: 0.5rem;
+    position: relative; /* normal flow */
+  }
+
+  .gc-toolbar-spacer {
+    flex: 1;
+  }
+
+  /* Initially hide fullscreen toolbar, show normal toolbar */
+  .overlay-toolbar {
+    display: none;
+  }
+
+  .bottom-toolbar {
+    display: flex;
+  }
+
+  /* When fullscreen class is toggled on .gc-wrapper */
+  .gc-wrapper.gc-fullscreen .overlay-toolbar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-width: none;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 10000;
+    padding: 0.4rem 0.6rem;
+    box-sizing: border-box;
+    border-radius: 0;
+  }
+
+  .gc-wrapper.gc-fullscreen .bottom-toolbar {
+    display: none;
+  }
+
+  .gc-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.5rem;
+  }
+  .gc-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .gc-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+</style>

@@ -1,0 +1,71 @@
+{{/* Game config from front matter */}}
+{{ $game := .Params.game }}
+{{ if not $game.partial }}
+  <p style="color:red;">⚠ No game partial specified in front matter.</p>
+{{ else }}
+
+  {{/* Aspect ratio mapping */}}
+  {{ $ratioStr := default "16:9" $game.ratio }}
+  {{ $aspectMap := dict "16:9" "gc-aspect-16-9" "9:16" "gc-aspect-9-16" "4:3" "gc-aspect-4-3" "3:4" "gc-aspect-3-4" }}
+  {{ $aspectClass := index $aspectMap $ratioStr | default "gc-aspect-16-9" }}
+
+  {{/* Unique ID */}}
+  {{ $gcID := printf "gc-%s" .File.BaseFileName }}
+
+<div class="gc-wrapper">
+  <div id="{{ $gcID }}" class="gc-container {{ $aspectClass }}">
+    {{/*  <div class="gc-inner-gradient"></div>  */}}
+    <div class="gc-game-content">
+      {{ partial (printf "games/%s.html" $game.partial) . }}
+    </div>
+    <!-- Toolbar sits below container -->
+    <div class="gc-toolbar overlay-toolbar">
+        <button class="gc-btn gc-btn-mute" aria-label="Toggle Mute">
+          <svg class="gc-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M11 5L6 9H2v6h4l5 4V5z" />
+          </svg>
+          <span>Mute</span>
+        </button>
+        <div class="gc-toolbar-spacer"></div>
+        <button class="gc-btn gc-btn-fullscreen" aria-label="Toggle Fullscreen">
+          <svg class="gc-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 8V4h4M4 4l5 5m11-5v4h-4m4-4l-5 5M4 16v4h4M4 20l5-5m11 5v-4h-4m4 4l-5-5"/>
+          </svg>
+          <span>Fullscreen</span>
+        </button>
+      </div>
+    </div>
+    <!-- Toolbar sits below container -->
+    <div class="gc-toolbar bottom-toolbar">
+        <button class="gc-btn gc-btn-mute" aria-label="Toggle Mute">
+          <svg class="gc-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M11 5L6 9H2v6h4l5 4V5z" />
+          </svg>
+          <span>Mute</span>
+        </button>
+        <div class="gc-toolbar-spacer"></div>
+        <button class="gc-btn gc-btn-fullscreen" aria-label="Toggle Fullscreen">
+          <svg class="gc-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 8V4h4M4 4l5 5m11-5v4h-4m4-4l-5 5M4 16v4h4M4 20l5-5m11 5v-4h-4m4 4l-5-5"/>
+          </svg>
+          <span>Fullscreen</span>
+        </button>
+      </div>
+
+</div>
+
+
+  <!-- Include shared CSS and JS -->
+  {{ partial "game_container_assets_2.html" (dict "id" $gcID) }}
+
+{{ end }}

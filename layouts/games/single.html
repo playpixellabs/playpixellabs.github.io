@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+{{ partial "head.html" . }}
+<body>
+    {{ partial "header.html" . }}
+    {{ partial "navbar.html" . }}
+
+    <main class="main-content">
+        <div class="single-game-container">
+            {{ partial "game_container_2.html" . }}
+            <h1 class="category-title">{{ .Title }}</h1>
+
+            <img src="{{ .Params.image }}" alt="{{ .Title }}" class="single-game-image">
+            <div class="single-game-meta">
+                <p><strong>Categories:</strong> 
+                    {{- range .Params.categories -}}
+                        <a href="{{ "/categories/" | relURL }}{{ . | urlize }}" class="nav-item">{{ . }}</a>
+                    {{- end -}}
+                </p>
+                <p><strong>Tags:</strong> 
+                    {{- range .Params.tags -}}
+                        <a href="{{ "/tags/" | relURL }}{{ . | urlize }}" class="nav-item">{{ . }}</a>
+                    {{- end -}}
+                </p>
+            </div>
+            <div class="single-game-content">
+                {{ .Content }}
+            </div>
+        </div>
+        {{ $current := . }}
+{{ $relatedGames := (where (where .Site.RegularPages "Type" "games") "Permalink" "ne" .Permalink) }} 
+
+{{ if $current.Params.categories }}
+  {{ $relatedGames = where $relatedGames "Params.categories" "intersect" $current.Params.categories | first 6 }}
+{{ else }}
+  {{ $relatedGames = first 6 $relatedGames }}
+{{ end }}
+
+{{ if gt (len $relatedGames) 0 }}
+  <section class="related-games">
+    <h2>Related Games</h2>
+    <div class="related-games-grid">
+      {{ range $relatedGames }}
+        {{/*  <a href="{{ .RelPermalink }}" class="related-game-card" title="{{ .Title }}">
+          <img src="{{ with .Params.image }}{{ . }}{{ else }}/images/default-game.jpg{{ end }}" alt="{{ .Title }}">
+          <h3>{{ .Title }}</h3>
+        </a>  */}}
+        {{ partial "game_card.html" . }}
+      {{ end }}
+    </div>
+  </section>
+{{ end }}
+
+    </main>
+</body>
+</html>
