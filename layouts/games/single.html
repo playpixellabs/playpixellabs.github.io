@@ -27,7 +27,7 @@
   min-width: 280px;
 }
 
-.game-title {
+.single-game-title {
     font-size: 24px;
     font-weight: 700;
     margin-bottom: 16px;
@@ -159,7 +159,7 @@
     <main class="main-content">
         <div class="single-game-container">
             {{ partial "game_container_2.html" . }}
-            <h2 class="game-title">{{ .Title }}</h2>
+            <h2 class="single-game-title">{{ .Title }}</h2>
 
             <div class="single-game-content">
               {{ .Content }}

@@ -22,3 +22,98 @@
         </button>  */}}
     </div>
 </header>
+
+
+<style>
+    /* Base search container styling */
+.search-container {
+  display: flex;
+  align-items: center;
+  background: #1e293b; /* dark background */
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+#search-bar {
+  border: none;
+  background: transparent;
+  padding: 0.5rem 0.8rem;
+  font-size: 1rem;
+  color: white;
+  width: 100%;
+}
+
+#search-bar:focus {
+  outline: none;
+}
+
+.search-btn {
+  background: transparent;
+  color: white;
+  border: none;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+}
+
+/* ---------- Mobile behavior ---------- */
+@media (max-width: 768px) {
+  /* Hide full search bar on header for mobile until triggered */
+  .search-container {
+    display: none;
+    position: fixed;
+    top: 60px; /* below header */
+    left: 0;
+    right: 0;
+    background: #1e293b;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    z-index: 999;
+  }
+  
+  /* When active, show as a full-width overlay */
+  .search-container.active {
+    display: flex;
+  }
+
+  #search-bar {
+    font-size: 0.95rem;
+    padding: 0.5rem;
+  }
+  
+  .search-mobile-btn {
+    background: none;
+    border: none;
+    color: white;
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+}
+
+</style>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const mobileBtn = document.querySelector(".search-mobile-btn");
+  const searchContainer = document.querySelector(".search-container");
+
+  // Toggle on mobile icon click
+  mobileBtn.addEventListener("click", (e) => {
+    e.stopPropagation(); // prevent this click from triggering document click handler
+    searchContainer.classList.toggle("active");
+  });
+
+  // Prevent clicks inside the search container from closing it
+  searchContainer.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+
+  // Click outside closes the search
+  document.addEventListener("click", () => {
+    if (searchContainer.classList.contains("active")) {
+      searchContainer.classList.remove("active");
+    }
+  });
+});
+</script>
+
