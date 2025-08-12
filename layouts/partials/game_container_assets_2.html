@@ -131,12 +131,13 @@
   .gc-toolbar {
     width: 100%;
     max-width: 800px;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgb(53 67 143);
     display: flex;
     align-items: center;
     padding: 0.4rem 0.6rem;
     box-sizing: border-box;
-    margin-top: 0.3rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     border-radius: 0.5rem;
     position: relative; /* normal flow */
   }
@@ -156,10 +157,12 @@
 
   /* When fullscreen class is toggled on .gc-wrapper */
   .gc-wrapper.gc-fullscreen .overlay-toolbar {
+    padding: 10px;
     display: flex;
     position: fixed;
     bottom: 0;
     left: 0;
+    margin-bottom: 0;
     width: 100%;
     max-width: none;
     background: rgba(0, 0, 0, 0.6);
@@ -179,6 +182,7 @@
     gap: 0.3rem;
     background: transparent;
     color: white;
+    font-weight: bold;
     border: none;
     cursor: pointer;
     padding: 0.3rem 0.6rem;

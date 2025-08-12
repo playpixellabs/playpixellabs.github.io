@@ -1,6 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 {{ partial "head.html" . }}
+
+
+<style>
+  /* Main content flex layout */
+.main-content {
+  display: flex;
+  align-items: flex-start; /* align items on top */
+  gap: 2rem; /* space between columns */
+  max-width: 1200px; /* optional page width limit */
+  margin: 0 auto; /* center layout on wide screens */
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+/* Left side: game container */
+.single-game-container {
+  flex: 2; /* take more space */
+  min-width: 0; /* prevents overflow */
+}
+
+/* Right side: related games */
+.related-games {
+  flex: 1; /* sidebar width */
+  min-width: 280px;
+}
+
+/* Container styling for meta section */
+.single-game-meta {
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  color: #1d1d1d; /* adjust for your theme */
+}
+
+.single-game-meta p {
+  margin: 0.5rem 0;
+}
+
+/* Headings text inside meta */
+.single-game-meta strong {
+  display: inline-block;
+  margin-right: 0.5rem;
+  color: #1d1d1d;
+  font-weight: bold
+}
+
+/* Shared styles for category and tag links */
+.single-game-meta a {
+  display: inline-block;
+  background-color: #2563eb; /* blue for tags/categories */
+  color: #fff;
+  padding: 0.2rem 0.6rem;
+  margin: 0.2rem 0.3rem 0.2rem 0;
+  font-size: 0.85rem;
+  text-decoration: none;
+  border-radius: 999px; /* rounded pill shape */
+  transition: background-color 0.2s ease-in-out, transform 0.15s ease-in-out;
+}
+
+/* Category link specific color */
+.single-game-meta p:first-of-type a {
+  background-color: #f59e0b; /* amber/yellow for categories */
+}
+
+/* Tag link specific color */
+.single-game-meta p:last-of-type a {
+  background-color: #10b981; /* green for tags */
+}
+
+/* Hover and active states */
+.single-game-meta a:hover {
+  background-color: #1e40af; /* darker blue */
+  transform: translateY(-1px);
+}
+
+.single-game-meta p:first-of-type a:hover {
+  background-color: #b45309; /* darker amber for categories */
+}
+
+.single-game-meta p:last-of-type a:hover {
+  background-color: #047857; /* darker green for tags */
+}
+
+
+/* General image styling */
+.single-game-image {
+  max-width: 100%;       /* Responsive: never overflow container */
+  height: auto;          /* Maintain aspect ratio */
+  display: block;        /* Remove inline gap */
+  margin: 1.5rem 0;      /* Vertical spacing */
+  border-radius: 0.75rem;/* Rounded corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  object-fit: cover;     /* Crop if image aspect differs */
+  transition: transform 0.3s ease; /* Smooth hover effect */
+  cursor: pointer;       /* Indicate clickable if desired */
+}
+
+/* Hover effect */
+.single-game-image:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Optional: a subtle border */
+.single-game-image {
+  border: 2px solid #2563eb; /* Use your theme color or transparent */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .single-game-image {
+    margin: 1rem 0;
+    border-radius: 0.5rem;
+  }
+}
+
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .single-game-meta a {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem;
+  }
+}
+
+
+/* Responsive for medium & small screens */
+@media (max-width: 900px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .single-game-container,
+  .related-games {
+    flex: none;
+    width: 100%;
+  }
+
+  .related-games {
+    margin-top: 2rem;
+  }
+}
+
+</style>
 <body>
     {{ partial "header.html" . }}
     {{ partial "navbar.html" . }}
@@ -8,24 +151,24 @@
     <main class="main-content">
         <div class="single-game-container">
             {{ partial "game_container_2.html" . }}
-            <h1 class="category-title">{{ .Title }}</h1>
+            <h2 class="category-title">{{ .Title }}</h2>
 
-            <img src="{{ .Params.image }}" alt="{{ .Title }}" class="single-game-image">
-            <div class="single-game-meta">
-                <p><strong>Categories:</strong> 
-                    {{- range .Params.categories -}}
-                        <a href="{{ "/categories/" | relURL }}{{ . | urlize }}" class="nav-item">{{ . }}</a>
-                    {{- end -}}
-                </p>
-                <p><strong>Tags:</strong> 
-                    {{- range .Params.tags -}}
-                        <a href="{{ "/tags/" | relURL }}{{ . | urlize }}" class="nav-item">{{ . }}</a>
-                    {{- end -}}
-                </p>
-            </div>
             <div class="single-game-content">
-                {{ .Content }}
+              {{ .Content }}
             </div>
+            <div class="single-game-meta">
+              <p><strong>Categories:</strong> 
+                {{- range .Params.categories -}}
+                <a href="{{ "/categories/" | relURL }}{{ . | urlize }}" class="nav-item">{{ . }}</a>
+                {{- end -}}
+              </p>
+              <p><strong>Tags:</strong> 
+                {{- range .Params.tags -}}
+                <a href="{{ "/tags/" | relURL }}{{ . | urlize }}" class="nav-item">{{ . }}</a>
+                {{- end -}}
+              </p>
+            </div>
+            <img src="{{ .Params.image }}" alt="{{ .Title }}" class="single-game-image">
         </div>
         {{ $current := . }}
 {{ $relatedGames := (where (where .Site.RegularPages "Type" "games") "Permalink" "ne" .Permalink) }} 

@@ -385,34 +385,29 @@ body {
     max-width: 900px;
     margin: 2rem auto;
     padding: 1rem;
-    background: #f9f9f9;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     font-family: 'Manrope', sans-serif;
     color: #333;
 }
 
-/* Title */
-.single-game-container h1.category-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: #222;
+
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .category-title {
+    font-size: 1.3rem;
     text-align: center;
+  }
 }
 
-/* Game Image */
-.single-game-image {
-    width: 100%;
-    max-height: 400px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+@media (max-width: 480px) {
+  .category-title {
+    font-size: 1.2rem;
+  }
 }
+
+
 
 /* Meta info container */
 .single-game-meta {
