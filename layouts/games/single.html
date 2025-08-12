@@ -27,6 +27,14 @@
   min-width: 280px;
 }
 
+.game-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    font-weight: bold;
+
+}
+
 /* Container styling for meta section */
 .single-game-meta {
   margin: 1.5rem 0;
@@ -151,7 +159,7 @@
     <main class="main-content">
         <div class="single-game-container">
             {{ partial "game_container_2.html" . }}
-            <h2 class="category-title">{{ .Title }}</h2>
+            <h2 class="game-title">{{ .Title }}</h2>
 
             <div class="single-game-content">
               {{ .Content }}
