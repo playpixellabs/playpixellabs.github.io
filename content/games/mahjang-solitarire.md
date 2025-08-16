@@ -7,7 +7,6 @@ categories: ["Board"]
 tags: ["mahjong", "classic", "solitaire"]
 game:
   partial: "stick_hero"   # corresponds to layouts/partials/games/snake.html
-  ratio: "16:9"       # optional, defaults to 16:9
   allowfullscreen: true
 ---
 Enjoy the timeless classic Mahjong Solitaire. Match identical tiles to clear the board and relax with hundreds of layouts. A perfect game to unwind and challenge your mind.

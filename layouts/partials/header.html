@@ -14,6 +14,9 @@
         </button>
     </div>
     <div class="user-actions">
+      <a href="/playlists">
+        <button class="blog-btn">Playlists</button>
+        </a>
         <button class="search-mobile-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
         </button>
@@ -87,6 +90,38 @@
     padding: 0.5rem;
     cursor: pointer;
   }
+}
+
+
+.user-actions .blog-btn {
+    /* Color & Background */
+    background-color: #4a6dde00;
+    color: #ffffff; /* White text for contrast */
+
+    /* Spacing & Layout */
+    padding: 12px 24px; /* Generous padding for a comfortable click area */
+    border: none; /* No border for a cleaner look */
+    border-radius: 8px; /* Slightly rounded corners */
+
+    /* Typography */
+    font-size: 16px; /* Legible font size */
+    font-weight: 600; /* Bolder font weight for emphasis */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* A stack of modern, sans-serif fonts */
+
+    /* Interactivity */
+    cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
+    transition: background-color 0.3s ease, transform 0.1s ease; /* Smooth transition for hover effects */
+
+    /* Shadow (Optional but recommended) */
+   /*  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  */
+}
+
+.blog-btn:hover {
+   /*  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); Slightly larger shadow on hover */
+}
+
+.blog-btn:active {
+    transform: translateY(1px); /* A subtle "push down" effect on click */
 }
 
 </style>
