@@ -1,0 +1,26 @@
+
+
+
+{{ define "main" }}
+
+<div id="all-games-container">
+
+
+    <section class="game-category-section">
+        <h2 class="category-title">All Lessons</h2>
+        <div class="game-grid" id="all-games-grid">
+            {{/*  {{ len (where .Site.RegularPages "Type" "games") }}  */}}
+            {{/*  {{ range where .Site.RegularPages "Type" "playlists" }}  */}}
+            {{ range .Pages }}
+                {{ partial "playlist_card.html" . }}
+            {{ end }}
+            {{/*  {{ range where .Site.RegularPages "Section" "games" }}
+                {{ partial "game_card.html" . }}
+            {{ end }}  */}}
+            
+        </div>
+    </section>
+
+</div>
+
+{{ end }}

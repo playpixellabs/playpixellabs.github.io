@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-{{ partial "head.html" . }}
-<body>
+{{ define "main" }}
 
-    {{ partial "header.html" . }}
-    {{ partial "navbar.html" . }}
-
-    <main class="main-content">
+    {{/*  <main class="main-content">  */}}
         {{/*  <h1 class="page-title">{{ .Title }}</h1>  */}}
 
         {{- if .IsHome -}}
@@ -27,7 +21,15 @@
         {{- else if eq .Kind "term" -}}
             {{/* This section lists all pages for a specific term (e.g., /categories/adventure/) */}}
             <section class="game-category-section">
+                {{ if or (eq $.Page.RelPermalink "/") (in $.Page.RelPermalink "/categories") }}
                 <h2 class="category-title">Games in {{ .Title | humanize }}</h2>
+                {{ else if or (in $.Page.RelPermalink "/playlists") (in $.Page.RelPermalink "/subjects") }}
+                <h2 class="category-title">Playlists in {{ .Title | humanize }}</h2>
+                {{ else }}
+                <h2 class="category-title">Lists in {{ .Title | humanize }}</h2>
+                {{end }}
+
+
                 <div class="game-grid">
                     {{- range .Paginator.Pages -}}
                         {{- partial "game_card.html" . -}}
@@ -45,8 +47,6 @@
                 </div>
             </section>
         {{- end -}}
-    </main>
+    {{/*  </main>  */}}
 
-    <script src="/js/script.js"></script>
-</body>
-</html>
+{{ end }}

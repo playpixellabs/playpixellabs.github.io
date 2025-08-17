@@ -1,16 +1,16 @@
 <nav class="navbar">
   <div class="nav-links">
-    {{ $isAllActive := eq $.Page.RelPermalink "/" }}
+    {{ $isAllActive := eq $.Page.RelPermalink "/playlists/" }}
 
     {{ if $isAllActive }}
       <button class="nav-item active" data-filter="all">All</button>
     {{ else }}
-      <a href="/">
+      <a href="/playlists">
         <button class="nav-item" data-filter="all">All</button>
       </a>
     {{ end }}
 
-    {{ range $category := .Site.Taxonomies.categories.ByCount }}
+    {{ range $category := .Site.Taxonomies.subjects.ByCount }}
       {{ $isActive := eq $category.Page.Permalink $.Page.Permalink }}
 
       {{ if $isActive }}
@@ -25,6 +25,7 @@
         </a>
       {{ end }}
     {{ end }}
-    
+
+
   </div>
 </nav>

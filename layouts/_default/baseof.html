@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+{{ partial "head.html" . }}
+<body>
+
+    {{ partial "header.html" . }}
+    {{/*  {{ partial "navbar.html" . }}  */}}
+        {{ if or (eq $.Page.RelPermalink "/") (in $.Page.RelPermalink "/categories") }}
+  {{ partial "navbar.html" . }}
+{{ else if or (in $.Page.RelPermalink "/playlists") (in $.Page.RelPermalink "/subjects") }}
+  {{ partial "playlists_navbar.html" . }}
+{{ end }}
+
+    <main class="main-content">
+        {{- block "main" . }}{{- end }}
+    </main>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>

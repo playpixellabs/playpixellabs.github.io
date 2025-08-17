@@ -19,6 +19,8 @@ title = 'PlayPixelLabs'
 [taxonomies]
   category = "categories"
   tag = "tags"
+  subject = "subjects"
+  keyword = "keywords"
 
 [params]
   description = "The best collection of quick, lightweight browser games."
