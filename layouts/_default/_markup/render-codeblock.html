@@ -1,0 +1,20 @@
+{{/* layouts/_default/_markup/render-codeblock.html */}}
+
+{{/* Get the code language and options */}}
+{{ $lang := .Type }}
+{{ $opts := .Options }}
+
+{{/* Check for a title/filename in the options map */}}
+{{ $title := index $opts "title" }}
+
+<div class="code-block-container">
+  {{/* If a title is provided, render the filename tab */}}
+  {{ if $title }}
+    <div class="code-block-filename">{{ $title }}</div>
+  {{ end }}
+
+  {{/* Render the highlighted code block */}}
+  <div class="code-block-content">
+    {{ highlight .Inner $lang $opts }}
+  </div>
+</div>

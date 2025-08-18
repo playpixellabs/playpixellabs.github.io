@@ -1,5 +1,6 @@
 :root {
-    --primary-bg: #f0f4f9;
+    /* --primary-bg: #f0f4f9; */
+    --primary-bg: #ffffff;
     --secondary-bg: #ffffff;
     --header-bg: #8c82ff;
     --header-gradient: linear-gradient(135deg, #7451eb 0%, #3a75e3 100%);

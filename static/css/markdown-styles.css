@@ -166,3 +166,112 @@
     overflow-y: hidden;
     padding: 1em 0;
 }
+
+
+/* Responsive KaTeX styling */
+.katex-display {
+    overflow-x: auto; /* Allow horizontal scrolling */
+    overflow-y: hidden;
+    padding-bottom: 0.5rem; /* Add some space for the scrollbar */
+    -webkit-overflow-scrolling: touch; /* Smoother scrolling on iOS */
+}
+
+.footnotes{
+    overflow-wrap: break-word;
+}
+
+li{
+    overflow-wrap: break-word;
+}
+
+a{
+    overflow-wrap: break-word;
+}
+
+/* --- Responsive Table Container --- */
+table{
+  display: block;
+  width: 100%;
+  overflow-x: auto; /* Enables horizontal scrolling */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  border-radius: 8px; /* Optional: for aesthetics */
+  margin: 1.5em 0; /* Optional: adds vertical spacing */
+}
+
+/* --- Basic Table Styling (for a clean look) --- */
+/* This styling is optional but recommended */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 12px 15px;
+  border: 1px solid #e1e1e1;
+}
+
+thead th {
+  background-color: #f8f9fa; /* A light grey for the header */
+  font-weight: 600;
+  color: #333;
+}
+
+tbody tr:nth-of-type(even) {
+  background-color: #fdfdfd; /* Zebra-striping for readability */
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1; /* Hover effect */
+}
+
+
+
+/* --- Container for Code Block and Filename --- */
+.code-block-container {
+  position: relative;
+  margin: 1.5em 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Important for containing the child elements */
+}
+
+/* --- Filename Tab Styling --- */
+.code-block-filename {
+  display: inline-block;
+  background-color: #44475a; /* Matches Dracula theme's darker color */
+  color: #f8f8f2; /* Matches Dracula's text color */
+  padding: 0.5em 1em;
+  font-family: monospace;
+  font-size: 0.85em;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+/* --- Styling for the Highlighted Code Block --- */
+/* This ensures the code block itself has no top margin and fits the container */
+.code-block-container .highlight {
+  margin: 0;
+  border-radius: 0; /* Remove default radius if any */
+  /* If filename exists, round the top-right corner, otherwise round all top corners */
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* If there's a filename, the top-left corner should not be rounded */
+.code-block-container .code-block-filename + .code-block-content .highlight {
+  border-top-left-radius: 0;
+}
+
+/* --- Styling for Highlighted Lines --- */
+/* Chroma uses this class for highlighted lines */
+.highlight .hl {
+  background-color: #44475a; /* A darker highlight color */
+  display: block; /* Makes the highlight span the full width */
+  margin: 0 -1em; /* Adjust based on your code block's padding */
+  padding: 0 1em; /* Restore padding */
+}
+

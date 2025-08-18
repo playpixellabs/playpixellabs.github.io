@@ -8,6 +8,20 @@ title = 'PlayPixelLabs'
 [outputs]
   home = ["HTML", "RSS", "JSON"]
 
+[markup]
+  [markup.highlight]
+    # See https://xyproto.github.io/splash/docs/ for theme gallery
+    style = "dracula"
+    codeFences = true
+    guessSyntax = true
+    lineNos = true
+    noClasses = false
+    # Other available options:
+    # anchorLineNos = true
+    # lineNumbersInTable = true
+    # tabWidth = 4
+
+
 [mediaTypes."application/json"]
   suffixes = ["json"]
 
