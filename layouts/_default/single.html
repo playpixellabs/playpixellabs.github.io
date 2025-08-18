@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-{{ partial "head.html" . }}
-<body>
-    {{ partial "header.html" . }}
-    {{ partial "navbar.html" . }}
+{{ define "main" }}
 
-    <main class="main-content">
+
+    {{/*  <main class="main-content">  */}}
         <div class="single-game-container">
             <h1 class="category-title">{{ .Title }}</h1>
             <img src="{{ .Params.image }}" alt="{{ .Title }}" class="single-game-image">
@@ -49,6 +45,5 @@
   </section>
 {{ end }}
 
-    </main>
-</body>
-</html>
+    {{/*  </main>  */}}
+{{ end }}

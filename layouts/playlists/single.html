@@ -1,0 +1,656 @@
+{{ define "main" }}
+
+<!-- Mobile Top Navigation -->
+<div class="mobile-nav">
+  <button id="toggle-lessons" class="mobile-nav-button">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+    <span>Menu</span>
+  </button>
+  <button id="toggle-toc" class="mobile-nav-button">
+    <span>On this page</span>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </button>
+
+  <!-- Right Sidebar (for mobile) is now INSIDE the mobile-nav -->
+  <aside id="sidebar-right" class="sidebar-right">
+    {{ if .TableOfContents }}
+    <div class="sidebar-sticky-content">
+      <h3>On this page</h3>
+      <nav id="toc" class="toc-nav">{{ .TableOfContents }}</nav>
+    </div>
+    {{ end }}
+  </aside>
+</div>
+<div class="mobile-nav-overlay"></div>
+
+<div class="course-layout-grid">
+  <!-- Left Sidebar: Course Lessons -->
+  <aside id="sidebar-left" class="sidebar-left">
+    <div class="sidebar-sticky-content">
+      {{ $coursePage := .Parent }} {{ with $coursePage }}
+      <h3>{{ .Title }}</h3>
+      <nav class="course-lesson-nav">
+        <ul>
+          {{ range .Pages }}
+          <li class="{{ if eq .Permalink $.Permalink }}active{{ end }}">
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </li>
+          {{ end }}
+        </ul>
+      </nav>
+      {{ end }}
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content-container">
+    <article class="blog-post">
+      <header>
+        {{ with .Params.image }}
+        <div class="featured-image-container">
+          <img
+            src="{{ . | absURL }}"
+            alt="{{ $.Title }}"
+            class="featured-image"
+          />
+        </div>
+        {{ end }}
+        <h1>{{ .Title }}</h1>
+        <p class="blog-meta">{{ .Date.Format "Jan 2, 2006" }}</p>
+      </header>
+      <section class="blog-content">{{ .Content }}</section>
+    </article>
+
+    {{ with .NextInSection }}
+    <nav class="lesson-navigation">
+      <a href="{{ .RelPermalink }}" class="next-lesson-card">
+        <span>Up Next</span>
+        <strong>{{ .Title }} →</strong>
+      </a>
+    </nav>
+    {{ end }}
+  </main>
+
+  <!-- Right Sidebar: Table of Contents -->
+  <aside id="sidebar-right-desktop" class="sidebar-right-desktop">
+    {{ if .TableOfContents }}
+    <div class="sidebar-sticky-content">
+      <h3>On this page</h3>
+      <nav id="toc-desktop" class="toc-nav">{{ .TableOfContents }}</nav>
+    </div>
+    {{ end }}
+  </aside>
+</div>
+
+<!-- This section is now outside the main grid to span full width -->
+<div class="post-content-footer">
+  <div class="lesson-cards-container">
+    <!-- Next Lessons Section -->
+    {{ $pages := .Parent.Pages }} {{ $currentIndex := -1 }} {{ range $i, $p :=
+    $pages }}{{ if eq .Permalink $.Permalink }}{{ $currentIndex = $i }}{{ end
+    }}{{ end }} {{ $nextLessons := after (add $currentIndex 1) $pages | first 4
+    }} {{ if gt (len $nextLessons) 0 }}
+    <section class="next-lessons">
+      <h2>Continue Learning</h2>
+      <div class="next-lessons-grid">
+        {{ range $nextLessons }}
+        <a href="{{ .RelPermalink }}" class="lesson-card">
+          <div class="lesson-card-content">
+            <h4>{{ .Title }}</h4>
+            <p>{{ .Summary | truncate 70 }}</p>
+          </div>
+          <span>Read Lesson →</span>
+        </a>
+        {{ end }}
+      </div>
+    </section>
+    {{ end }}
+
+    <!-- Pagination -->
+    <nav class="post-pagination">
+      {{ with .PrevInSection }}
+      <a class="prev-post" href="{{ .RelPermalink }}">
+        <span>← Previous Lesson</span>
+        <strong>{{ .Title }}</strong>
+      </a>
+      {{ else }}
+      <span></span>
+      <!-- Empty span to maintain grid layout -->
+      {{ end }} {{ with .NextInSection }}
+      <a class="next-post" href="{{ .RelPermalink }}">
+        <span>Next Lesson →</span>
+        <strong>{{ .Title }}</strong>
+      </a>
+      {{ end }}
+    </nav>
+  </div>
+
+  <!-- Related Courses Section -->
+  <section class="related-courses">
+    <h2>Related Courses</h2>
+    <div class="related-grid">
+      {{ $currentSection := .CurrentSection }} {{ $courses := where
+      .Site.Sections "Section" "!=" $currentSection.Section | first 3 }} {{
+      range $courses }}
+      <div class="related-card">
+        <a href="{{ .RelPermalink }}">
+          {{ with .Params.featured_image }}
+          <img src="{{ . | absURL }}" alt="{{ .Title }}" />
+          {{ end }}
+          <div class="card-content">
+            <h3>{{ .Title }}</h3>
+            <p>{{ .Summary | default .Description | truncate 90 }}</p>
+          </div>
+        </a>
+      </div>
+      {{ end }}
+    </div>
+  </section>
+</div>
+
+<style>
+  :root {
+    --primary-color: #4f46e5;
+    --light-gray: #f3f4f6;
+    --medium-gray: #6b7280;
+    --dark-gray: #1f2937;
+    --card-shadow: 0 2px 16px rgba(50, 50, 50, 0.07);
+    --card-hover-shadow: 0 4px 18px rgba(0, 0, 30, 0.1);
+    --nav-height: 57px;
+  }
+  body.sidebar-open {
+    overflow: hidden;
+  }
+
+  /* --- Mobile Navigation --- */
+  .mobile-nav {
+    display: none; /* Hidden on desktop */
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 1000;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0.5rem 1rem;
+    justify-content: space-between;
+    height: var(--nav-height);
+  }
+  .mobile-nav-button {
+    background: none;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+  }
+  .mobile-nav-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1010;
+  }
+  .mobile-nav-overlay.is-visible {
+    display: block;
+  }
+
+  /* --- Main Layout Grid --- */
+  .course-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  @media (min-width: 1024px) {
+    .course-layout-grid {
+      grid-template-columns: 260px 1fr 240px;
+      margin-top: 2rem;
+    }
+  }
+
+  /* --- Sidebars: Mobile First --- */
+
+  /* Left Sidebar (Mobile): Slide-in Panel */
+  .sidebar-left {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 280px;
+    background: #fff;
+    z-index: 1020;
+    padding: 1.5rem;
+    overflow-y: auto;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-100%);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+  .sidebar-left.is-open {
+    transform: translateX(0);
+  }
+
+  /* Right Sidebar (Mobile): Absolute Dropdown */
+  .sidebar-right {
+    display: block;
+    position: absolute;
+    top: 100%; /* Position it right below the nav bar */
+    left: 0;
+    right: 0;
+    z-index: 990;
+    background: #fff;
+    padding: 1rem;
+    max-height: 50vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, visibility 0.3s;
+    transform: scaleY(0.95) translateY(-10px);
+    opacity: 0;
+    visibility: hidden;
+    transform-origin: top;
+  }
+  .sidebar-right.is-open {
+    transform: scaleY(1) translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .sidebar-right-desktop {
+    display: none; /* Hidden on mobile */
+  }
+
+  @media (max-width: 1023px) {
+    .mobile-nav {
+      display: flex;
+    }
+    .course-layout-grid {
+      display: flex;
+      flex-direction: column;
+    }
+    .main-content-container {
+      order: 1;
+    }
+    /* No need to order sidebars as they are 'fixed' */
+  }
+
+  /* --- Sidebars: Desktop --- */
+  @media (min-width: 1024px) {
+    .sidebar-left,
+    .sidebar-right {
+      /* Reset all mobile styles */
+      position: static;
+      transform: none;
+      visibility: visible;
+      width: auto;
+      background: none;
+      box-shadow: none;
+      padding: 0;
+      max-height: none;
+      overflow-y: visible;
+    }
+    .sidebar-right {
+      display: none; /* Hide mobile TOC */
+    }
+    .sidebar-right-desktop {
+      display: block; /* Show desktop TOC */
+    }
+    .sidebar-sticky-content {
+      position: sticky;
+      top: 2rem;
+      height: calc(100vh - 4rem);
+      overflow-y: auto;
+    }
+  }
+
+  .sidebar-left h3,
+  .sidebar-right h3,
+  .sidebar-right-desktop h3 {
+    font-size: 1.2rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--light-gray);
+    padding-bottom: 0.5rem;
+  }
+  .course-lesson-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .course-lesson-nav li a {
+    display: block;
+    padding: 0.6rem 0.8rem;
+    text-decoration: none;
+    color: var(--medium-gray);
+    border-radius: 6px;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .course-lesson-nav li a:hover {
+    background-color: var(--light-gray);
+    color: var(--dark-gray);
+  }
+  .course-lesson-nav li.active a {
+    background-color: #e0e7ff;
+    color: var(--primary-color);
+    font-weight: 600;
+  }
+  .toc-nav ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  .toc-nav ul ul {
+    padding-left: 1rem;
+  }
+  .toc-nav a {
+    display: block;
+    padding: 0.3rem 0;
+    font-size: 0.9rem;
+    color: var(--medium-gray);
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    padding-left: 0.8rem;
+    transition: all 0.2s;
+  }
+  .toc-nav a:hover {
+    color: var(--primary-color);
+  }
+  .toc-nav li.active > a {
+    color: var(--primary-color);
+    font-weight: 600;
+    border-left-color: var(--primary-color);
+  }
+
+  /* --- Main Content & Post Styling --- */
+  .blog-post {
+    /* background: #fff;  */
+    /* border-radius: 15px;  */
+    /* box-shadow: var(--card-shadow);  */
+    /* padding: 2rem;  */
+  }
+  @media (max-width: 600px) {
+    .blog-post {
+      /*  padding: 1rem; */
+    }
+  }
+  .featured-image-container {
+    margin-bottom: 2rem;
+  }
+  .featured-image {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  .blog-meta {
+    color: #888;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  .blog-content {
+    line-height: 1.7;
+  }
+
+  /* --- NEW: Post Content Footer Wrapper --- */
+  .post-content-footer {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .lesson-cards-container {
+    max-width: 1000px;
+  }
+
+  /* --- NEW: Next Lessons Section --- */
+  .next-lessons {
+    margin: 3rem 0;
+  }
+  .next-lessons h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 0.5rem;
+  }
+  .next-lessons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .lesson-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .lesson-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-hover-shadow);
+  }
+  .lesson-card h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+    color: var(--dark-gray);
+  }
+  .lesson-card p {
+    font-size: 0.95rem;
+    color: var(--medium-gray);
+    margin-bottom: 1rem;
+  }
+  .lesson-card span {
+    font-weight: 500;
+    color: var(--primary-color);
+  }
+
+  /* --- NEW: Post Pagination --- */
+  .post-pagination {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 3rem 0;
+  }
+  .post-pagination a {
+    background: var(--light-gray);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-decoration: none;
+    transition: background-color 0.2s;
+  }
+  .post-pagination a:hover {
+    background-color: #e5e7eb;
+  }
+  .post-pagination a span {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--medium-gray);
+  }
+  .post-pagination a strong {
+    display: block;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-top: 0.25rem;
+  }
+  .post-pagination .next-post {
+    text-align: right;
+  }
+
+  /* --- Related Courses Section --- */
+  .related-courses {
+    margin: 3rem 0;
+  }
+  .related-courses h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 0.5rem;
+  }
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  .related-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .related-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-hover-shadow);
+  }
+  .related-card a {
+    text-decoration: none;
+    color: inherit;
+  }
+  .related-card img {
+    width: 100%;
+    object-fit: cover;
+    height: 160px;
+    display: block;
+  }
+  .related-card .card-content {
+    padding: 1rem 1.2rem;
+  }
+  .related-card h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2em;
+  }
+  .related-card p {
+    margin: 0;
+    color: #666;
+    font-size: 0.97em;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const headings = document.querySelectorAll(
+      ".blog-content h2[id], .blog-content h3[id]"
+    );
+
+    // Reusable function for setting up TOC observers
+    const setupTocObserver = (tocElement) => {
+      if (!tocElement || headings.length === 0) return;
+
+      const tocLinks = tocElement.querySelectorAll("a");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute("id");
+              const correspondingLink = tocElement.querySelector(
+                `a[href="#${id}"]`
+              );
+
+              tocLinks.forEach((link) =>
+                link.parentElement.classList.remove("active")
+              );
+
+              if (correspondingLink) {
+                const activeListItem = correspondingLink.parentElement;
+                activeListItem.classList.add("active");
+
+                // Scroll the active item into view if it's not visible
+                activeListItem.scrollIntoView({
+                  behavior: "smooth",
+                  block: "nearest",
+                });
+              }
+            }
+          });
+        },
+        { rootMargin: "-20% 0px -50% 0px", threshold: 0.5 }
+      );
+
+      headings.forEach((heading) => observer.observe(heading));
+    };
+
+    // Setup for both desktop and mobile TOCs
+    setupTocObserver(document.getElementById("toc-desktop"));
+    setupTocObserver(document.getElementById("toc"));
+
+    // Mobile Sidebar Toggles
+    const toggleLessonsBtn = document.getElementById("toggle-lessons");
+    const toggleTocBtn = document.getElementById("toggle-toc");
+    const sidebarLeft = document.getElementById("sidebar-left");
+    const sidebarRight = document.getElementById("sidebar-right");
+    const overlay = document.querySelector(".mobile-nav-overlay");
+
+    const closeSidebars = () => {
+      sidebarLeft.classList.remove("is-open");
+      sidebarRight.classList.remove("is-open");
+      overlay.classList.remove("is-visible");
+      document.body.classList.remove("sidebar-open");
+    };
+
+    toggleLessonsBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = sidebarLeft.classList.toggle("is-open");
+      overlay.classList.toggle("is-visible", isOpen);
+      document.body.classList.toggle("sidebar-open", isOpen);
+      sidebarRight.classList.remove("is-open"); // Close other sidebar
+    });
+
+    toggleTocBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = sidebarRight.classList.toggle("is-open");
+      // The overlay is not needed for the dropdown TOC
+      sidebarLeft.classList.remove("is-open"); // Close other sidebar
+    });
+
+    overlay.addEventListener("click", closeSidebars);
+
+    // Add event listener to the whole document to close the right sidebar when clicking outside
+    document.addEventListener("click", function (event) {
+      const isTocOpen = sidebarRight.classList.contains("is-open");
+      const isClickInsideToggleButton = toggleTocBtn.contains(event.target);
+      const isClickInsideSidebar = sidebarRight.contains(event.target);
+
+      if (isTocOpen && !isClickInsideToggleButton && !isClickInsideSidebar) {
+        sidebarRight.classList.remove("is-open");
+      }
+    });
+  });
+</script>
+
+{{ end }}

@@ -3,8 +3,14 @@
   <h1>{{ .Title }}</h1>
   */}}
   <div class="hero-cards">
-    {{ range where .Site.RegularPages "Type" "playlist" }} {{ partial
+    {{ range where .Site.RegularPages "Type" "playlists" }} {{ partial
     "hero_card.html" . }} {{ end }}
+    {{/*  {{ range where (where .Site.RegularPages "Type" "playlists") "Params.featured_playlist" true }}
+  {{ partial "hero_card.html" . }}  */}}
+    {{/*  {{ range where .Site.RegularPages "Params.featured_playlist" true }}
+  {{ partial "hero_card.html" . }}
+{{ end }}  */}}
+
   </div>
 </div>
 

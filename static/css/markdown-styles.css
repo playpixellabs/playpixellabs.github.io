@@ -1,0 +1,168 @@
+/* --- Markdown Content Styling --- */
+/* This file should be saved as "markdown-styles.css" in your "static/css/" directory */
+
+.blog-content {
+    color: #374151;
+    line-height: 1.7;
+}
+
+/* --- Headings & Typography --- */
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+    color: #111827;
+    font-weight: 600;
+    line-height: 1.25;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+.blog-content h1 { font-size: 2.25rem; }
+.blog-content h2 { font-size: 1.875rem; border-bottom: 1px solid #e5e7eb; padding-bottom: .3em; }
+.blog-content h3 { font-size: 1.5rem; }
+.blog-content h4 { font-size: 1.25rem; }
+
+.blog-content p {
+    margin-bottom: 1.25em;
+}
+
+.blog-content a {
+    color: var(--primary-color, #4f46e5);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.blog-content a:hover {
+    text-decoration: underline;
+}
+
+.blog-content strong {
+    font-weight: 600;
+}
+
+.blog-content hr {
+    border: 0;
+    border-top: 1px solid #e5e7eb;
+    margin: 3em 0;
+}
+
+/* --- Lists --- */
+.blog-content ul,
+.blog-content ol {
+    padding-left: 1.5em;
+    margin-bottom: 1.25em;
+}
+
+.blog-content li > p {
+    margin-bottom: 0.5em;
+}
+
+/* --- Blockquotes --- */
+.blog-content blockquote {
+    margin: 1.5em 0;
+    padding: 0.5em 1em;
+    border-left: 4px solid #d1d5db;
+    background-color: #f9fafb;
+    color: #4b5563;
+    font-style: italic;
+}
+
+.blog-content blockquote p {
+    margin-bottom: 0;
+}
+
+/* --- Tables --- */
+.blog-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2em 0;
+    font-size: 0.9em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.blog-content th,
+.blog-content td {
+    border: 1px solid #d1d5db;
+    padding: 0.75rem 1rem;
+    text-align: left;
+}
+
+.blog-content thead th {
+    background-color: #f9fafb;
+    font-weight: 600;
+    color: #374151;
+}
+
+.blog-content tbody tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+/* --- Code Blocks & Inline Code --- */
+.blog-content code {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    font-size: 85%;
+}
+
+/* Inline code */
+.blog-content :not(pre) > code {
+    background-color: #eef2ff;
+    color: #4338ca;
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+}
+
+/* Code blocks */
+.blog-content pre {
+    position: relative;
+    background-color: #1f2937;
+    color: #d1d5db;
+    padding: 1.25em 1.5em;
+    border-radius: 8px;
+    margin: 2em 0;
+    overflow-x: auto;
+    font-size: 0.9em;
+}
+
+.blog-content pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+}
+
+.copy-code-button {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background-color: #4b5563;
+    color: #e5e7eb;
+    border: none;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    opacity: 0.7;
+    transition: opacity 0.2s, background-color 0.2s;
+}
+
+.blog-content pre:hover .copy-code-button {
+    opacity: 1;
+}
+
+.copy-code-button:hover {
+    background-color: #6b7280;
+}
+
+.copy-code-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #374151;
+}
+
+/* --- KaTeX / LaTeX Styling --- */
+.blog-content .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 1em 0;
+}

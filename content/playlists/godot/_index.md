@@ -5,6 +5,7 @@ draft: false
 image: "https://godotengine.org/assets/share-image.webp"
 subjects: ["Godot"]
 keywords: ["mahjong", "classic", "solitaire"]
+featured_playlist: true
 game:
   partial: "stick_hero"   # corresponds to layouts/partials/games/snake.html
   allowfullscreen: true
