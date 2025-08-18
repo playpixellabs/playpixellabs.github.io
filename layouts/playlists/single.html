@@ -193,7 +193,9 @@
     display: none; /* Hidden on desktop */
     position: sticky;
     top: 0;
-    background: #fff;
+    /*  background: #fff; */
+    background: #f0f4f9;
+
     z-index: 1000;
     border-bottom: 1px solid #e5e7eb;
     padding: 0.5rem 1rem;
@@ -271,7 +273,7 @@
     left: 0;
     right: 0;
     z-index: 990;
-    background: #fff;
+    background: #f0f4f9;
     padding: 1rem;
     max-height: 50vh;
     overflow-y: auto;
@@ -281,6 +283,8 @@
     opacity: 0;
     visibility: hidden;
     transform-origin: top;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
   }
   .sidebar-right.is-open {
     transform: scaleY(1) translateY(0);

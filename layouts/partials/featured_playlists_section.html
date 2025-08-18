@@ -1,32 +1,32 @@
-<div class="hero_section">
+<div class="featured_playlists_section">
   {{/*
   <h1>{{ .Title }}</h1>
   */}}
-  <div class="hero-cards">
+  <div class="featured_playlists-cards">
     {{ range where .Site.RegularPages "Type" "playlists" }} {{ partial
-    "hero_card.html" . }} {{ end }}
+    "featured_playlists_card.html" . }} {{ end }}
     {{/*  {{ range where (where .Site.RegularPages "Type" "playlists") "Params.featured_playlist" true }}
-  {{ partial "hero_card.html" . }}  */}}
+  {{ partial "featured_playlists_card.html" . }}  */}}
     {{/*  {{ range where .Site.RegularPages "Params.featured_playlist" true }}
-  {{ partial "hero_card.html" . }}
+  {{ partial "featured_playlists_card.html" . }}
 {{ end }}  */}}
 
   </div>
 </div>
 
 <style>
-  .hero_section {
+  .featured_playlists_section {
     background-color: #f0f0f0; /* Example background color */
     text-align: center;
     padding: 0px;
   }
 
-  .hero_section h1 {
+  .featured_playlists_section h1 {
     font-size: 2.5rem;
     margin-bottom: 10px;
   }
 
-  .hero-cards {
+  .featured_playlists-cards {
     display: flex; /* Makes the cards line up horizontally */
     overflow-x: scroll; /* Enables horizontal scrolling */
     flex-wrap: nowrap; /* Prevents wrapping to the next line */
@@ -39,43 +39,43 @@
   }
 
   /* For WebKit browsers (Chrome, Safari) */
-  .hero-cards::-webkit-scrollbar {
+  .featured_playlists-cards::-webkit-scrollbar {
     height: 10px;
   }
 
-  .hero-cards::-webkit-scrollbar-track {
+  .featured_playlists-cards::-webkit-scrollbar-track {
     background: #f1f1f1;
     border-radius: 10px;
   }
 
-  .hero-cards::-webkit-scrollbar-thumb {
+  .featured_playlists-cards::-webkit-scrollbar-thumb {
     background: #ffffff;
     border-radius: 10px;
   }
 
-  .hero-cards::-webkit-scrollbar-thumb:hover {
+  .featured_playlists-cards::-webkit-scrollbar-thumb:hover {
     background: #ffffff;
   }
 
   /* For WebKit browsers (Chrome, Safari) */
-  .hero-cards::-webkit-scrollbar {
+  .featured_playlists-cards::-webkit-scrollbar {
     display: none; /* Hides the scrollbar */
     width: 0; /* Hides the scrollbar */
     height: 0; /* Hides the scrollbar */
     scrollbar-width: none; /* For Firefox */
   }
 
-  .hero-card {
+  .featured_playlists-card {
     flex-shrink: 0; /* Prevents the card from shrinking */
     width: 300px; /* Gives the card a fixed width */
     height: 100%;
   }
   /*
-  The hero_card.html partial would need its own styling to define
+  The featured_playlists_card.html partial would need its own styling to define
   the card's appearance (e.g., width, padding, box-shadow, etc.).
   For example:
 
-  .hero_card {
+  .featured_playlists_card {
     flex-shrink: 0; // Prevents cards from shrinking
     width: 300px;
     background-color: white;
@@ -90,11 +90,11 @@
   /* -------------------- */
 
   @media (max-width: 768px) {
-    .hero-cards {
+    .featured_playlists-cards {
       padding-left: 16px;
       padding-top: 20px;
     }
-    .hero-card {
+    .featured_playlists-card {
       aspect-ratio: 4/3;
     }
   }
@@ -102,7 +102,7 @@
 
 <script>
   // Get the container for the cards
-  const cardContainer = document.querySelector(".hero-cards");
+  const cardContainer = document.querySelector(".featured_playlists-cards");
 
   // Get the width of a single card plus the gap
   const cardWidth = 300;
