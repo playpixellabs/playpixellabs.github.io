@@ -177,7 +177,14 @@
 }
 
 .footnotes{
+    max-width: 50vw;
     overflow-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+    .footnotes {
+        max-width: 100%;
+    }
 }
 
 li{
@@ -187,46 +194,6 @@ li{
 a{
     overflow-wrap: break-word;
 }
-
-/* --- Responsive Table Container --- */
-table{
-  display: block;
-  width: 100%;
-  overflow-x: auto; /* Enables horizontal scrolling */
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-  border-radius: 8px; /* Optional: for aesthetics */
-  margin: 1.5em 0; /* Optional: adds vertical spacing */
-}
-
-/* --- Basic Table Styling (for a clean look) --- */
-/* This styling is optional but recommended */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.95em;
-  text-align: left;
-}
-
-th,
-td {
-  padding: 12px 15px;
-  border: 1px solid #e1e1e1;
-}
-
-thead th {
-  background-color: #f8f9fa; /* A light grey for the header */
-  font-weight: 600;
-  color: #333;
-}
-
-tbody tr:nth-of-type(even) {
-  background-color: #fdfdfd; /* Zebra-striping for readability */
-}
-
-tbody tr:hover {
-  background-color: #f1f1f1; /* Hover effect */
-}
-
 
 
 /* --- Container for Code Block and Filename --- */
