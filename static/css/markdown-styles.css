@@ -177,24 +177,9 @@
 }
 
 .footnotes{
+    overflow-wrap: break-word;
     max-width: 50vw;
-    overflow-wrap: break-word;
 }
-
-@media (max-width: 768px) {
-    .footnotes {
-        max-width: 100%;
-    }
-}
-
-li{
-    overflow-wrap: break-word;
-}
-
-a{
-    overflow-wrap: break-word;
-}
-
 
 /* --- Container for Code Block and Filename --- */
 .code-block-container {
