@@ -6,9 +6,16 @@ title = 'PlayPixelLabs'
 
 # Enable JSON output for the search index
 [outputs]
-  home = ["HTML", "RSS", "JSON"]
+  home = ["HTML", "RSS"]
+
+# hugo.toml
 
 [markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      # Set this to true to allow raw HTML in your Markdown files.
+      # Be careful with this setting if you have untrusted content.
+      unsafe = true
   [markup.highlight]
     # ==> Method 1: Inline Styles (easiest)
     # The default is 'true', which uses inline styles.
