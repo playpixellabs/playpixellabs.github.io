@@ -193,8 +193,8 @@
     display: none; /* Hidden on desktop */
     position: sticky;
     top: 0;
-     background: #fff;
-     /* background: #f0f4f9;*/
+    background: #fff;
+    /* background: #f0f4f9;*/
 
     z-index: 1000;
     border-bottom: 1px solid #e5e7eb;
@@ -239,7 +239,7 @@
 
   @media (min-width: 1024px) {
     .course-layout-grid {
-     /*  grid-template-columns: 260px 1fr 240px; */
+      /*  grid-template-columns: 260px 1fr 240px; */
       grid-template-columns: 240px 1fr 240px;
       margin-top: 2rem;
     }
@@ -430,11 +430,11 @@
     line-height: 1.7;
   }
 
-    /* --- NEW: Add top margin for scroll-to-anchor links --- */
+  /* --- NEW: Add top margin for scroll-to-anchor links --- */
   .blog-content h2[id],
   .blog-content h3[id] {
     /* This ensures that when you jump to a heading, it doesn't get hidden behind the sticky mobile nav. */
-    scroll-margin-top: 70px; 
+    scroll-margin-top: 70px;
   }
 
   /* --- NEW: Post Content Footer Wrapper --- */
@@ -667,14 +667,49 @@
 
     // --- NEW: Close mobile TOC sidebar when a link is clicked ---
     if (sidebarRight) {
-      sidebarRight.addEventListener('click', (event) => {
+      sidebarRight.addEventListener("click", (event) => {
         // Check if the click was on an anchor tag (a TOC link)
-        if (event.target.closest('a')) {
-          sidebarRight.classList.remove('is-open');
+        if (event.target.closest("a")) {
+          sidebarRight.classList.remove("is-open");
         }
       });
     }
+  });
+</script>
 
+<script>
+  // --- NEW: Code Block Copy Button Functionality ---
+  document.querySelectorAll(".copy-button").forEach((button) => {
+    const wrapper = button.closest(".code-block-wrapper");
+    const codeContainer = wrapper.querySelector(".highlight");
+
+    button.addEventListener("click", () => {
+      // Get the raw text content of the code
+      const codeToCopy = codeContainer.innerText || codeContainer.textContent;
+
+      navigator.clipboard
+        .writeText(codeToCopy)
+        .then(() => {
+          const copyText = button.querySelector(".copy-text");
+          const iconCopy = button.querySelector(".icon-copy");
+          const iconCheck = button.querySelector(".icon-check");
+
+          copyText.textContent = "Copied!";
+          iconCopy.style.display = "none";
+          iconCheck.style.display = "inline";
+
+          // Reset button text and icon after 2 seconds
+          setTimeout(() => {
+            copyText.textContent = "Copy";
+            iconCopy.style.display = "inline";
+            iconCheck.style.display = "none";
+          }, 2000);
+        })
+        .catch((err) => {
+          console.error("Failed to copy text: ", err);
+          alert("Failed to copy text.");
+        });
+    });
   });
 </script>
 

@@ -101,29 +101,29 @@
 }
 
 /* --- Code Blocks & Inline Code --- */
-.blog-content code {
+/* .blog-content code {
     font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
     font-size: 85%;
-}
+} */
 
 /* Inline code */
 .blog-content :not(pre) > code {
-    background-color: #eef2ff;
-    color: #4338ca;
-    padding: 0.2em 0.4em;
+    /* background-color: #eef2ff; */
+    /* color: #4338ca; */
+    /* padding: 0.2em 0.4em; */
     border-radius: 4px;
 }
 
 /* Code blocks */
 .blog-content pre {
-    position: relative;
-    background-color: #1f2937;
-    color: #d1d5db;
+    /* position: relative; */
+    /* background-color: #1f2937; */
+    /* color: #d1d5db; */
     padding: 1.25em 1.5em;
     border-radius: 8px;
-    margin: 2em 0;
-    overflow-x: auto;
-    font-size: 0.9em;
+    /* margin: 2em 0; */
+    /* overflow-x: auto; */
+    /* font-size: 0.9em; */
 }
 
 .blog-content pre code {
@@ -227,3 +227,81 @@
   padding: 0 1em; /* Restore padding */
 }
 
+
+
+
+
+/* --- NEW: Code Block Styling with Header & Copy Button --- */
+ .code-block-wrapper {
+   position: relative;
+   margin: 1.5rem 0;
+   border: 1px solid #e5e7eb;
+   border-radius: 8px;
+   overflow: hidden;
+ }
+
+ .code-block-header {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   background-color: #f3f4f6;
+   padding: 0.6rem 0.5rem 0.6rem 1rem;
+   border-bottom: 1px solid #e5e7eb;
+ }
+
+ .code-block-header .filename {
+   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+     "Liberation Mono", "Courier New", monospace;
+   font-size: 0.9em;
+   color: #374151;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+ }
+
+ .copy-button {
+   display: inline-flex;
+   align-items: center;
+   gap: 0.4rem;
+   background-color: #e5e7eb;
+   color: #374151;
+   border: none;
+   padding: 0.3rem 0.7rem;
+   font-size: 0.85em;
+   border-radius: 6px;
+   cursor: pointer;
+   transition: background-color 0.2s;
+ }
+
+ .copy-button:hover {
+   background-color: #d1d5db;
+ }
+
+ .copy-button svg {
+   width: 14px;
+   height: 14px;
+ }
+
+ /* When a code block has no filename, position the copy button absolutely */
+ .code-block-header.no-filename {
+   position: absolute;
+   top: 0.5rem;
+   right: 0.5rem;
+   z-index: 1;
+   padding: 0;
+   background: none;
+   border: none;
+ }
+ .code-block-header.no-filename .copy-button {
+    background: #f3f4f6;
+    opacity: 0.7; /* Make it subtle until hover */
+ }
+ .code-block-header.no-filename .copy-button:hover {
+    opacity: 1;
+ }
+
+ /* Ensure Hugo's default .highlight div doesn't add extra margins */
+ .code-block-wrapper .highlight {
+   margin: 0;
+   border-radius: 0;
+ }

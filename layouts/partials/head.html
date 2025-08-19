@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/markdown-styles.css">
 
+      {{ $syntax := resources.Get "css/syntax.css" }}
+  {{ if $syntax }}
+    <link rel="stylesheet" href="{{ $syntax.RelPermalink }}">
+  {{ end }}
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>

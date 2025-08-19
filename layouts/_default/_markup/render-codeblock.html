@@ -1,20 +1,19 @@
-{{/* layouts/_default/_markup/render-codeblock.html */}}
-
-{{/* Get the code language and options */}}
+{{/* Get filename from the code fence options */}}
+{{ $filename := .Options.filename | default "" }}
+{{/* The language (e.g., "python") is available as .Type in this context */}}
 {{ $lang := .Type }}
-{{ $opts := .Options }}
+{{ $highlightedCode := highlight .Inner $lang .Options }}
 
-{{/* Check for a title/filename in the options map */}}
-{{ $title := index $opts "title" }}
-
-<div class="code-block-container">
-  {{/* If a title is provided, render the filename tab */}}
-  {{ if $title }}
-    <div class="code-block-filename">{{ $title }}</div>
-  {{ end }}
-
-  {{/* Render the highlighted code block */}}
-  <div class="code-block-content">
-    {{ highlight .Inner $lang $opts }}
+<div class="code-block-wrapper">
+  <div class="code-block-header{{ if not $filename }} no-filename{{ end }}">
+    {{/* Display filename only if it exists */}}
+    {{ with $filename }}<span class="filename">{{ . }}</span>{{ end }}
+    <button class="copy-button" title="Copy to clipboard">
+      <svg class="icon-copy" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      <span class="copy-text">Copy</span>
+    </button>
   </div>
+  {{/* The actual highlighted code from Hugo */}}
+  {{ $highlightedCode | safeHTML }}
 </div>

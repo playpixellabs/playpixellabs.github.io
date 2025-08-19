@@ -95,3 +95,32 @@ func main() {
     fmt.Println("Syntax highlighting is awesome!")
 }
 ```
+
+
+```go {filename="main.go"}
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, World!")
+}
+```
+
+```css
+body {
+  font-family: sans-serif;
+  line-height: 1.6;
+}
+```
+
+
+```go {linenos=true, linenostart=101, hl_lines=[102, "104-105"]}
+package main
+
+import "fmt" // This is line 102
+
+func main() { // This is line 104
+    fmt.Println("Advanced Highlighting!") // This is line 105
+}
+```

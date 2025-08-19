@@ -10,16 +10,29 @@ title = 'PlayPixelLabs'
 
 [markup]
   [markup.highlight]
-    # See https://xyproto.github.io/splash/docs/ for theme gallery
-    style = "dracula"
-    codeFences = true
-    guessSyntax = true
-    lineNos = true
+    # ==> Method 1: Inline Styles (easiest)
+    # The default is 'true', which uses inline styles.
+    # No extra CSS file is needed, but HTML files are larger.
     noClasses = false
-    # Other available options:
-    # anchorLineNos = true
-    # lineNumbersInTable = true
-    # tabWidth = 4
+
+    # ==> Method 2: CSS Classes (recommended for performance)
+    # If you set this to 'false', you must generate a syntax CSS file.
+    # See Step 3 for instructions.
+    # noClasses = false
+
+    # Choose a color theme.
+    # See the full list at: [https://xyproto.github.io/splash/docs/all.html](https://xyproto.github.io/splash/docs/all.html)
+    # Popular themes: dracula, monokai, github, friendly, nord
+    style = 'dracula'
+
+    # Show line numbers globally. Can be overridden per code block.
+    lineNos = false
+
+    # Enable standard Markdown code fences.
+    codeFences = true
+
+    # Guess syntax for code blocks without a language specified.
+    guessSyntax = false
 
 
 [mediaTypes."application/json"]

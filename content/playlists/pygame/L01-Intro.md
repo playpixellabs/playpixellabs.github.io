@@ -77,3 +77,12 @@ Amit Singh
 That’s it! You’ve just written your first Python program! 🚀
 Keep practicing and exploring for more fun with Python.
 
+```go {filename="main.go"}
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, World!")
+}
+```
