@@ -429,6 +429,13 @@
     line-height: 1.7;
   }
 
+    /* --- NEW: Add top margin for scroll-to-anchor links --- */
+  .blog-content h2[id],
+  .blog-content h3[id] {
+    /* This ensures that when you jump to a heading, it doesn't get hidden behind the sticky mobile nav. */
+    scroll-margin-top: 70px; 
+  }
+
   /* --- NEW: Post Content Footer Wrapper --- */
   .post-content-footer {
     max-width: 1400px;
@@ -656,6 +663,17 @@
         sidebarRight.classList.remove("is-open");
       }
     });
+
+    // --- NEW: Close mobile TOC sidebar when a link is clicked ---
+    if (sidebarRight) {
+      sidebarRight.addEventListener('click', (event) => {
+        // Check if the click was on an anchor tag (a TOC link)
+        if (event.target.closest('a')) {
+          sidebarRight.classList.remove('is-open');
+        }
+      });
+    }
+
   });
 </script>
 
