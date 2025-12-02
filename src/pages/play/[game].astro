@@ -1,0 +1,102 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Snake from "../../games/Snake.astro";
+
+export function getStaticPaths() {
+    return [
+        { params: { game: "snake" } },
+        { params: { game: "memory-match" } },
+        { params: { game: "space-shooter" } },
+        { params: { game: "2048" } },
+        { params: { game: "tetris" } },
+        { params: { game: "chess" } },
+    ];
+}
+
+const { game } = Astro.params;
+
+const gameTitles: Record<string, string> = {
+    snake: "Snake Classic",
+    "memory-match": "Memory Match",
+    "space-shooter": "Space Shooter",
+    "2048": "2048",
+    tetris: "Tetris",
+    chess: "Chess",
+};
+
+const title = gameTitles[game] || "Game";
+---
+
+<Layout title={`${title} - PlayPixelLabs`}>
+    <Header />
+
+    <main class="game-page">
+        <div class="container">
+            <div class="game-header">
+                <h1>{title}</h1>
+                <a href="/" class="back-link">← Back to Games</a>
+            </div>
+
+            <div class="game-wrapper glass">
+                {
+                    game === "snake" ? (
+                        <Snake />
+                    ) : (
+                        <div class="placeholder-game">
+                            <p>Game "{title}" is coming soon!</p>
+                        </div>
+                    )
+                }
+            </div>
+
+            <div class="game-info">
+                <h2>How to Play</h2>
+                <p>Use arrow keys or on-screen buttons to control the game.</p>
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .game-page {
+        padding: 2rem 0;
+    }
+
+    .game-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .back-link {
+        color: var(--color-text-muted);
+        font-weight: 500;
+    }
+
+    .back-link:hover {
+        color: white;
+    }
+
+    .game-wrapper {
+        padding: 2rem;
+        border-radius: 16px;
+        min-height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 2rem;
+    }
+
+    .placeholder-game {
+        text-align: center;
+        color: var(--color-text-muted);
+        font-size: 1.2rem;
+    }
+
+    .game-info {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+</style>

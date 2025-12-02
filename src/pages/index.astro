@@ -1,0 +1,121 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import CategoryFilter from "../components/CategoryFilter.astro";
+import GameCard from "../components/GameCard.astro";
+
+const games = [
+	{
+		title: "Snake Classic",
+		category: "Arcade",
+		image: "https://images.unsplash.com/photo-1628277613967-6ab58cf56736?q=80&w=800&auto=format&fit=crop",
+		slug: "snake",
+		color: "#4ade80",
+	},
+	{
+		title: "Memory Match",
+		category: "Puzzle",
+		image: "https://images.unsplash.com/photo-1606167668584-78701c57f13d?q=80&w=800&auto=format&fit=crop",
+		slug: "memory-match",
+		color: "#f472b6",
+	},
+	{
+		title: "Space Shooter",
+		category: "Action",
+		image: "https://images.unsplash.com/photo-1551103782-8ab07afd45c1?q=80&w=800&auto=format&fit=crop",
+		slug: "space-shooter",
+		color: "#60a5fa",
+	},
+	{
+		title: "2048",
+		category: "Puzzle",
+		image: "https://images.unsplash.com/photo-1612404730960-5c71579fca2c?q=80&w=800&auto=format&fit=crop",
+		slug: "2048",
+		color: "#fbbf24",
+	},
+	{
+		title: "Tetris",
+		category: "Arcade",
+		image: "https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?q=80&w=800&auto=format&fit=crop",
+		slug: "tetris",
+		color: "#a78bfa",
+	},
+	{
+		title: "Chess",
+		category: "Strategy",
+		image: "https://images.unsplash.com/photo-1529699211952-734e80c4d42b?q=80&w=800&auto=format&fit=crop",
+		slug: "chess",
+		color: "#94a3b8",
+	},
+];
+---
+
+<Layout title="PlayPixelLabs | Play Free Online Games">
+	<Header />
+
+	<main>
+		<section class="hero">
+			<div class="container">
+				<div class="hero-content">
+					<h1>
+						Play <span class="gradient-text">Unlimted</span> Games
+					</h1>
+					<p>
+						Discover the best free online games. No downloads, just
+						play.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<CategoryFilter />
+
+		<section class="games-section">
+			<div class="container">
+				<div class="section-header">
+					<h2>All Games</h2>
+					<a href="/playlists" class="view-all">View All</a>
+				</div>
+
+				<div class="grid-games">
+					{games.map((game) => <GameCard {...game} />)}
+				</div>
+			</div>
+		</section>
+	</main>
+</Layout>
+
+<style>
+	.hero {
+		padding: 4rem 0 2rem;
+		text-align: center;
+	}
+
+	h1 {
+		font-size: 3rem;
+		margin-bottom: 1rem;
+	}
+
+	.hero p {
+		font-size: 1.2rem;
+		color: var(--color-text-muted);
+		max-width: 600px;
+		margin: 0 auto;
+	}
+
+	.games-section {
+		padding: 2rem 0 4rem;
+	}
+
+	.section-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 2rem;
+	}
+
+	.view-all {
+		color: var(--color-primary);
+		font-weight: 600;
+	}
+</style>

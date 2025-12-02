@@ -1,0 +1,67 @@
+---
+const categories = [
+    { name: "All", active: true },
+    { name: "Adventure", active: false },
+    { name: "Arcade", active: false },
+    { name: "Board", active: false },
+    { name: "Cards", active: false },
+    { name: "Puzzle", active: false },
+    { name: "Strategy", active: false },
+];
+---
+
+<div class="category-filter">
+    <div class="container">
+        <div class="scroll-wrapper">
+            {
+                categories.map((cat) => (
+                    <button
+                        class={`category-pill ${cat.active ? "active" : ""}`}
+                    >
+                        {cat.name}
+                    </button>
+                ))
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    .category-filter {
+        padding: 1.5rem 0;
+    }
+
+    .scroll-wrapper {
+        display: flex;
+        gap: 1rem;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        scrollbar-width: none; /* Firefox */
+    }
+
+    .scroll-wrapper::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+
+    .category-pill {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--color-text-muted);
+        padding: 0.5rem 1.5rem;
+        border-radius: 50px;
+        white-space: nowrap;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+
+    .category-pill:hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+    }
+
+    .category-pill.active {
+        background: white;
+        color: var(--color-secondary);
+        font-weight: 700;
+    }
+</style>
