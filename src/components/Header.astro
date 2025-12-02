@@ -1,5 +1,6 @@
 ---
 import { Search, Menu, Gamepad2 } from "lucide-astro";
+import ThemeToggle from "./ThemeToggle.astro";
 ---
 
 <header class="header glass">
@@ -20,6 +21,7 @@ import { Search, Menu, Gamepad2 } from "lucide-astro";
 
         <nav class="desktop-nav">
             <a href="/playlists">Playlists</a>
+            <ThemeToggle />
             <button class="menu-btn">
                 <Menu size={24} />
             </button>
@@ -63,7 +65,7 @@ import { Search, Menu, Gamepad2 } from "lucide-astro";
     }
 
     .logo-text {
-        color: white;
+        color: var(--color-text);
     }
 
     .highlight {
@@ -112,7 +114,7 @@ import { Search, Menu, Gamepad2 } from "lucide-astro";
     .menu-btn {
         background: none;
         border: none;
-        color: white;
+        color: var(--color-text);
         display: none; /* Hidden on desktop if not needed, or visible for drawer */
     }
 </style>

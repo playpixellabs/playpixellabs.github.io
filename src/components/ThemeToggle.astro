@@ -1,0 +1,81 @@
+---
+import { Sun, Moon } from "lucide-astro";
+---
+
+<button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+    <Sun class="sun-icon" size={20} />
+    <Moon class="moon-icon" size={20} />
+</button>
+
+<style>
+    .theme-toggle {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--color-text);
+        padding: 0.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Default (Dark): Show Sun, Hide Moon */
+    .sun-icon {
+        display: block;
+    }
+    .moon-icon {
+        display: none;
+    }
+
+    /* Light Theme: Hide Sun, Show Moon */
+    :global([data-theme="light"]) .sun-icon {
+        display: none;
+    }
+    :global([data-theme="light"]) .moon-icon {
+        display: block;
+    }
+</style>
+
+<script is:inline>
+    const theme = (() => {
+        if (
+            typeof localStorage !== "undefined" &&
+            localStorage.getItem("theme")
+        ) {
+            return localStorage.getItem("theme");
+        }
+        if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+            return "light";
+        }
+        return "dark";
+    })();
+
+    if (theme === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+    } else {
+        document.documentElement.removeAttribute("data-theme");
+    }
+
+    window.localStorage.setItem("theme", theme);
+
+    const handleToggleClick = () => {
+        const element = document.documentElement;
+        if (element.getAttribute("data-theme") === "light") {
+            element.removeAttribute("data-theme");
+            localStorage.setItem("theme", "dark");
+        } else {
+            element.setAttribute("data-theme", "light");
+            localStorage.setItem("theme", "light");
+        }
+    };
+
+    document
+        .getElementById("theme-toggle")
+        ?.addEventListener("click", handleToggleClick);
+</script>

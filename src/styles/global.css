@@ -1,5 +1,6 @@
 /* Global Styles */
 :root {
+    /* Default Dark Theme (Deep Purple/Blue) */
     --color-bg: #0f0e17;
     --color-surface: #1e1c2e;
     --color-primary: #ff0080;
@@ -7,6 +8,8 @@
     --color-accent: #0070f3;
     --color-text: #fffffe;
     --color-text-muted: #a7a9be;
+    --color-border: rgba(255, 255, 255, 0.1);
+    --glass-bg: rgba(30, 28, 46, 0.7);
 
     --font-heading: 'Outfit', sans-serif;
     --font-body: 'Inter', sans-serif;
@@ -15,6 +18,29 @@
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
     --shadow-glow: 0 0 20px rgba(121, 40, 202, 0.5);
+}
+
+[data-theme="light"] {
+    /* Light Theme (Crisp White/Blue/Pink) */
+    --color-bg: #f8fafc;
+    --color-surface: #ffffff;
+    --color-primary: #ec4899;
+    /* Pink-500 */
+    --color-secondary: #8b5cf6;
+    /* Violet-500 */
+    --color-accent: #3b82f6;
+    /* Blue-500 */
+    --color-text: #0f172a;
+    /* Slate-900 */
+    --color-text-muted: #64748b;
+    /* Slate-500 */
+    --color-border: rgba(0, 0, 0, 0.1);
+    --glass-bg: rgba(255, 255, 255, 0.7);
+
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --shadow-glow: 0 0 15px rgba(139, 92, 246, 0.3);
 }
 
 *,
@@ -31,6 +57,7 @@ body {
     color: var(--color-text);
     line-height: 1.6;
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1,
@@ -64,10 +91,11 @@ button {
 }
 
 .glass {
-    background: rgba(30, 28, 46, 0.7);
+    background: var(--glass-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--color-border);
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .gradient-text {
