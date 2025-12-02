@@ -1,0 +1,338 @@
+---
+
+---
+
+<div id="game-container">
+    <div id="score">Score: 0</div>
+    <div id="start-screen">
+        <h2>Neon Runner</h2>
+        <p>Tap or Press Space to Start</p>
+        <p class="controls">Arrow Keys / Swipe to Move</p>
+    </div>
+    <div id="game-over-screen" class="hidden">
+        <h2>Game Over</h2>
+        <p id="final-score">Score: 0</p>
+        <button id="restart-btn">Try Again</button>
+    </div>
+</div>
+
+<script>
+    import * as THREE from "three";
+
+    // Game Configuration
+    const CONFIG = {
+        laneWidth: 3,
+        speed: 0.5,
+        speedIncrease: 0.0005,
+        obstacleSpawnRate: 60, // Frames between spawns
+        colors: {
+            background: 0x111111,
+            player: 0x00ffcc, // Neon Cyan
+            obstacle: 0xff0066, // Neon Pink
+            floor: 0x222222,
+            grid: 0x444444,
+        },
+    };
+
+    // State
+    let scene, camera, renderer;
+    let player;
+    let obstacles = [];
+    let animationId;
+    let score = 0;
+    let isPlaying = false;
+    let currentLane = 0; // -1, 0, 1
+    let frameCount = 0;
+    let gameSpeed = CONFIG.speed;
+
+    // DOM Elements
+    const container = document.getElementById("game-container");
+    const scoreEl = document.getElementById("score");
+    const startScreen = document.getElementById("start-screen");
+    const gameOverScreen = document.getElementById("game-over-screen");
+    const finalScoreEl = document.getElementById("final-score");
+    const restartBtn = document.getElementById("restart-btn");
+
+    function init() {
+        // Scene Setup
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(CONFIG.colors.background);
+        scene.fog = new THREE.Fog(CONFIG.colors.background, 10, 50);
+
+        // Camera
+        camera = new THREE.PerspectiveCamera(
+            60,
+            container.clientWidth / container.clientHeight,
+            0.1,
+            100,
+        );
+        camera.position.set(0, 3, 6);
+        camera.lookAt(0, 0, -5);
+
+        // Renderer
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight.position.set(5, 10, 7);
+        scene.add(dirLight);
+
+        // Floor (Infinite Grid effect)
+        const gridHelper = new THREE.GridHelper(
+            100,
+            100,
+            CONFIG.colors.player,
+            CONFIG.colors.grid,
+        );
+        gridHelper.position.y = -0.5;
+        scene.add(gridHelper);
+
+        // Player
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const material = new THREE.MeshStandardMaterial({
+            color: CONFIG.colors.player,
+            emissive: CONFIG.colors.player,
+            emissiveIntensity: 0.5,
+        });
+        player = new THREE.Mesh(geometry, material);
+        player.position.y = 0;
+        scene.add(player);
+
+        // Event Listeners
+        window.addEventListener("resize", onWindowResize);
+        document.addEventListener("keydown", onKeyDown);
+
+        // Touch Controls
+        let touchStartX = 0;
+        container.addEventListener(
+            "touchstart",
+            (e) => (touchStartX = e.changedTouches[0].screenX),
+        );
+        container.addEventListener("touchend", (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            handleSwipe(touchStartX, touchEndX);
+        });
+
+        // Start Game Listener
+        container.addEventListener("click", () => {
+            if (!isPlaying && gameOverScreen.classList.contains("hidden"))
+                startGame();
+        });
+        document.addEventListener("keydown", (e) => {
+            if (
+                e.code === "Space" &&
+                !isPlaying &&
+                gameOverScreen.classList.contains("hidden")
+            )
+                startGame();
+        });
+
+        restartBtn.addEventListener("click", resetGame);
+    }
+
+    function startGame() {
+        isPlaying = true;
+        startScreen.classList.add("hidden");
+        animate();
+    }
+
+    function resetGame() {
+        gameOverScreen.classList.add("hidden");
+        startScreen.classList.remove("hidden");
+
+        // Reset State
+        score = 0;
+        gameSpeed = CONFIG.speed;
+        currentLane = 0;
+        player.position.x = 0;
+        scoreEl.innerText = `Score: 0`;
+
+        // Clear Obstacles
+        obstacles.forEach((obs) => scene.remove(obs));
+        obstacles = [];
+
+        isPlaying = false;
+    }
+
+    function gameOver() {
+        isPlaying = false;
+        cancelAnimationFrame(animationId);
+        finalScoreEl.innerText = `Score: ${Math.floor(score)}`;
+        gameOverScreen.classList.remove("hidden");
+    }
+
+    function spawnObstacle() {
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const material = new THREE.MeshStandardMaterial({
+            color: CONFIG.colors.obstacle,
+            emissive: CONFIG.colors.obstacle,
+            emissiveIntensity: 0.6,
+        });
+        const obstacle = new THREE.Mesh(geometry, material);
+
+        // Random Lane (-1, 0, 1)
+        const lane = Math.floor(Math.random() * 3) - 1;
+        obstacle.position.set(lane * CONFIG.laneWidth, 0, -50);
+
+        scene.add(obstacle);
+        obstacles.push(obstacle);
+    }
+
+    function handleSwipe(start, end) {
+        if (!isPlaying) return;
+        const threshold = 50;
+        if (end < start - threshold) movePlayer(-1); // Left
+        if (end > start + threshold) movePlayer(1); // Right
+    }
+
+    function onKeyDown(event) {
+        if (!isPlaying) return;
+        if (event.key === "ArrowLeft") movePlayer(-1);
+        if (event.key === "ArrowRight") movePlayer(1);
+    }
+
+    function movePlayer(direction) {
+        currentLane = Math.max(-1, Math.min(1, currentLane + direction));
+    }
+
+    function onWindowResize() {
+        if (!camera || !renderer) return;
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    }
+
+    function animate() {
+        if (!isPlaying) return;
+        animationId = requestAnimationFrame(animate);
+
+        // Update Player Position (Smooth Lerp)
+        const targetX = currentLane * CONFIG.laneWidth;
+        player.position.x += (targetX - player.position.x) * 0.1;
+
+        // Rotate Player
+        player.rotation.x -= 0.05;
+        player.rotation.y -= 0.02;
+
+        // Spawn Obstacles
+        frameCount++;
+        if (frameCount % CONFIG.obstacleSpawnRate === 0) {
+            spawnObstacle();
+        }
+
+        // Move Obstacles & Collision Detection
+        for (let i = obstacles.length - 1; i >= 0; i--) {
+            const obs = obstacles[i];
+            obs.position.z += gameSpeed;
+
+            // Collision
+            if (obs.position.z > -1 && obs.position.z < 1) {
+                // Simple box collision check on X axis
+                if (Math.abs(obs.position.x - player.position.x) < 0.8) {
+                    gameOver();
+                }
+            }
+
+            // Remove if passed
+            if (obs.position.z > 5) {
+                scene.remove(obs);
+                obstacles.splice(i, 1);
+                score += 10;
+                scoreEl.innerText = `Score: ${score}`;
+
+                // Increase difficulty
+                gameSpeed += CONFIG.speedIncrease;
+            }
+        }
+
+        renderer.render(scene, camera);
+    }
+
+    // Initialize
+    init();
+</script>
+
+<style>
+    #game-container {
+        width: 100%;
+        height: 600px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        background: #000;
+    }
+
+    #score {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        color: white;
+        font-family: "Outfit", sans-serif;
+        font-size: 1.5rem;
+        font-weight: bold;
+        z-index: 10;
+        text-shadow: 0 0 10px #00ffcc;
+    }
+
+    #start-screen,
+    #game-over-screen {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+        z-index: 20;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 2rem;
+        border-radius: 16px;
+        border: 1px solid #333;
+        backdrop-filter: blur(5px);
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    h2 {
+        font-family: "Outfit", sans-serif;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(45deg, #00ffcc, #0099ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    p {
+        font-family: "Inter", sans-serif;
+        color: #ccc;
+        margin-bottom: 1.5rem;
+    }
+
+    .controls {
+        font-size: 0.9rem;
+        opacity: 0.7;
+    }
+
+    button {
+        background: linear-gradient(45deg, #00ffcc, #0099ff);
+        border: none;
+        padding: 0.8rem 2rem;
+        border-radius: 50px;
+        color: black;
+        font-weight: bold;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+
+    button:hover {
+        transform: scale(1.05);
+    }
+</style>

@@ -2,10 +2,12 @@
 import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Snake from "../../games/Snake.astro";
+import NeonRunner from "../../games/NeonRunner.astro";
 
 export function getStaticPaths() {
     return [
         { params: { game: "snake" } },
+        { params: { game: "neon-runner" } },
         { params: { game: "memory-match" } },
         { params: { game: "space-shooter" } },
         { params: { game: "2048" } },
@@ -18,6 +20,7 @@ const { game } = Astro.params;
 
 const gameTitles: Record<string, string> = {
     snake: "Snake Classic",
+    "neon-runner": "Neon Runner",
     "memory-match": "Memory Match",
     "space-shooter": "Space Shooter",
     "2048": "2048",
@@ -42,6 +45,8 @@ const title = gameTitles[game] || "Game";
                 {
                     game === "snake" ? (
                         <Snake />
+                    ) : game === "neon-runner" ? (
+                        <NeonRunner />
                     ) : (
                         <div class="placeholder-game">
                             <p>Game "{title}" is coming soon!</p>
