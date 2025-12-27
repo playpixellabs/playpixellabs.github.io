@@ -1,0 +1,89 @@
+---
+import { User, Bell, Shield, Settings } from "lucide-astro";
+---
+
+<div class="profile-header">
+    <div class="user-info">
+        <div class="avatar-large">
+            <User size={32} color="#ffffff" />
+        </div>
+        <div class="greeting">
+            <h1>Hi Aryan!</h1>
+            <div class="user-badge">
+                <span class="badge-icon">🥚</span>
+                <span class="badge-text">ReptilianLighting91</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-actions">
+        <div class="action-item">
+            <span class="notification-badge">9+</span>
+            <Bell size={24} />
+        </div>
+        <div class="action-item">
+            <div class="user-circle-btn">A</div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .profile-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 1rem 0;
+        margin-bottom: 2rem;
+    }
+
+    .user-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        width: 100%;
+        text-align: center;
+    }
+
+    .avatar-large {
+        display: none; /* Only show on desktop or if user wants */
+    }
+
+    .greeting h1 {
+        font-family: "Google Sans", sans-serif;
+        font-size: 1.75rem;
+        color: var(--color-text);
+        margin: 0;
+        font-weight: 400;
+        margin-bottom: 0.5rem;
+    }
+
+    .user-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--color-surface-hover);
+        padding: 0.25rem 0.75rem 0.25rem 0.25rem;
+        border-radius: 100px;
+        font-size: 0.9rem;
+        color: var(--color-text);
+        font-weight: 500;
+    }
+
+    .badge-icon {
+        background: #fca5a5;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Actions mostly for top right, similar to screenshot */
+    .profile-actions {
+        display: none; /* Header already handles this globally usually, but screenshot shows it inline */
+    }
+
+    /* Override for specific Profile Top Bar look if needed, but for now using generic header styling or custom */
+</style>

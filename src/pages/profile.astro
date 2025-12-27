@@ -1,0 +1,37 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ProfileHeader from "../components/profile/ProfileHeader.astro";
+import PrizesCard from "../components/profile/PrizesCard.astro";
+import StreakSection from "../components/profile/StreakSection.astro";
+---
+
+<Layout title="Profile - PlayPixelLabs">
+    <div class="user-page-container">
+        <!-- Profile Header -->
+        <ProfileHeader />
+
+        <!-- Win Prizes Section -->
+        <h2 class="section-title">Win prizes and perks</h2>
+        <PrizesCard />
+
+        <!-- Streak Section -->
+        <StreakSection />
+    </div>
+</Layout>
+
+<style>
+    .user-page-container {
+        padding: 1rem 1.5rem;
+        max-width: 600px;
+        margin: 0 auto;
+        padding-bottom: 80px; /* Nav bar space */
+    }
+
+    .section-title {
+        font-family: "Google Sans", sans-serif;
+        font-size: 1.25rem;
+        color: var(--color-text);
+        margin-bottom: 1rem;
+        font-weight: 500;
+    }
+</style>

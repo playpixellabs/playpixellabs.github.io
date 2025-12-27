@@ -1,0 +1,251 @@
+---
+import { Search, Sparkles, ChevronRight } from "lucide-astro";
+
+const chips = [
+    { label: "Horse games", icon: "🐴" },
+    { label: "Drag racing games", icon: "🏎️" },
+    { label: "Shooting range games", icon: "🎯" },
+    { label: "Boost", icon: "⚡" },
+];
+
+const exploreCategories = [
+    { label: "Action", icon: "🚁", color: "#fecaca" },
+    { label: "Simulation", icon: "👀", color: "#a7f3d0" },
+    { label: "Puzzle", icon: "🧩", color: "#bae6fd" },
+    { label: "Adventure", icon: "🧭", color: "#fde68a" },
+    { label: "Racing", icon: "🏁", color: "#ddd6fe" },
+    { label: "Role Playing", icon: "⚔️", color: "#c7d2fe" },
+];
+
+const suggestions = [
+    { label: "History games" }, { label: "4X games" },
+    { label: "AI apps" }, { label: "Accommodation apps" }
+];
+---
+
+<div class="discovery-section">
+    <!-- What are you looking for? -->
+    <div class="section-block">
+        <div class="section-label">
+            <Sparkles size={18} fill="#4b5563" stroke="none" />
+            <span>What are you looking for?</span>
+        </div>
+        
+        <div class="chips-row">
+            {chips.map(chip => (
+                <button class="search-chip">
+                    <span class="chip-image">{chip.icon}</span>
+                    <span class="chip-label">{chip.label}</span>
+                </button>
+            ))}
+        </div>
+    </div>
+
+    <!-- Sponsored / Suggested -->
+    <div class="section-block">
+         <div class="section-header-row">
+            <span class="sponsored-label">Sponsored • Suggested for you</span>
+            <span class="dots">⋮</span>
+         </div>
+         
+         <div class="sponsored-card">
+            <div class="app-icon-large">
+                <span class="app-icon-text">blinkit</span>
+            </div>
+            <div class="app-details">
+                <h3>Blinkit: Grocery in 10 minutes</h3>
+                <p>Blinkit • Food & Drink • Grocery lists</p>
+                <div class="app-rating">
+                    <span>4.6 ★</span>
+                    <span>24 MB</span>
+                    <span>100M+</span>
+                </div>
+            </div>
+         </div>
+    </div>
+
+    <!-- You might like -->
+    <div class="section-block">
+        <h3>You might like</h3>
+        <div class="suggestions-grid">
+            {suggestions.map(s => (
+                <div class="suggestion-item">
+                    <span>{s.label}</span>
+                    <Search size={20} color="#0b57d0" />
+                </div>
+            ))}
+        </div>
+    </div>
+
+    <!-- Explore Games -->
+    <div class="section-block">
+        <h3>Explore games</h3>
+        <div class="categories-grid">
+            {exploreCategories.map(cat => (
+                <div class="category-card">
+                    <span class="cat-label">{cat.label}</span>
+                    <div class="cat-icon-wrapper" style={`background-color: ${cat.color}30`}> <!-- Low opacity bg -->
+                        <span class="cat-icon">{cat.icon}</span>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</div>
+
+<style>
+    .discovery-section {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    .section-block {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .section-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 500;
+        color: var(--color-text);
+        font-size: 1rem;
+    }
+
+    .chips-row {
+        display: flex;
+        gap: 0.75rem;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        scrollbar-width: none;
+    }
+    .chips-row::-webkit-scrollbar { display: none; }
+
+    .search-chip {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        padding: 0.5rem 1rem;
+        border-radius: 100px;
+        white-space: nowrap;
+        font-family: inherit;
+        font-size: 0.9rem;
+        color: var(--color-text);
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    
+    .chip-image {
+        /* Placeholder for tiny image preview */
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        text-align: center;
+    }
+
+    /* Sponsored */
+    .section-header-row {
+        display: flex;
+        justify-content: space-between;
+        color: var(--color-text-secondary);
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+    
+    .sponsored-card {
+        display: flex;
+        gap: 1rem;
+        background: var(--color-surface-hover); /* Wait, play store design is usually clean white/surface but generic card look */
+        /* Actually in screenshot it looks like a clean item row but maybe slightly showcased */
+    }
+
+    .app-icon-large {
+        width: 64px;
+        height: 64px;
+        background: #facc15; /* Yellow blinkit color */
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: #000;
+        font-size: 0.8rem;
+    }
+
+    .app-details h3 {
+        font-size: 1rem;
+        margin: 0 0 0.25rem 0;
+        color: var(--color-text);
+    }
+    .app-details p {
+        font-size: 0.85rem;
+        color: var(--color-text-secondary);
+        margin: 0 0 0.5rem 0;
+    }
+    .app-rating {
+        font-size: 0.75rem;
+        color: var(--color-text-secondary);
+        display: flex;
+        gap: 0.75rem;
+    }
+
+    /* Suggestions Grid */
+    .suggestions-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    .suggestion-item {
+        background: var(--color-surface-hover);
+        padding: 1rem;
+        border-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 500;
+        color: var(--color-text);
+        font-size: 0.95rem;
+    }
+
+    /* Categories Grid */
+    .categories-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    .category-card {
+        background: var(--color-surface-hover);
+        padding: 1rem; /* Height looks balanced */
+        border-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+    }
+
+    .cat-label {
+        font-weight: 500;
+        color: var(--color-text);
+        font-size: 0.95rem;
+    }
+    
+    .cat-icon-wrapper {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px; /* Or custom shape */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .cat-icon {
+        font-size: 1.25rem;
+    }
+</style>

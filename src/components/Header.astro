@@ -338,8 +338,8 @@ import { games } from "../data/games";
             justify-content: flex-start;
         }
 
-        .search-trigger-btn {
-            display: none;
+        #search-trigger {
+            display: none !important;
         }
         .search-bar-wrapper.hidden {
             display: flex !important;
@@ -348,8 +348,10 @@ import { games } from "../data/games";
             width: 100%;
             position: relative;
         }
-        .search-back-btn {
-            display: none;
+        #search-close,
+        .search-back-btn,
+        .icon-btn {
+            display: none !important;
         }
         .search-section.expanded {
             position: relative;

@@ -1,39 +1,59 @@
 ---
-import { Gamepad2, Search, Home } from "lucide-astro";
+import { Gamepad2, LayoutGrid, Search, Book, User } from "lucide-astro";
 ---
 
 <nav class="bottom-nav">
     <a href="/" class="nav-item active">
-        <Home size={24} />
-        <span>Home</span>
-    </a>
-    <a href="/games" class="nav-item">
-        <Gamepad2 size={24} />
+        <div class="icon-container">
+            <Gamepad2 size={24} />
+        </div>
         <span>Games</span>
     </a>
+    <a href="/apps" class="nav-item">
+        <div class="icon-container">
+            <LayoutGrid size={24} />
+        </div>
+        <span>Apps</span>
+    </a>
     <a href="/search" class="nav-item">
-        <Search size={24} />
+        <div class="icon-container">
+            <Search size={24} />
+        </div>
         <span>Search</span>
+    </a>
+    <a href="/books" class="nav-item">
+        <div class="icon-container">
+            <Book size={24} />
+        </div>
+        <span>Books</span>
+    </a>
+    <a href="/profile" class="nav-item">
+        <div class="icon-container">
+            <User size={24} />
+        </div>
+        <span>You</span>
     </a>
 </nav>
 
 <style>
     .bottom-nav {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
-        height: 60px; /* Standard height */
+        height: 72px; /* Taller for better touch targets */
         background-color: var(--color-surface);
         border-top: 1px solid var(--color-border);
         z-index: 1000;
         padding-bottom: env(safe-area-inset-bottom);
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 900px) {
         .bottom-nav {
             display: none;
         }
@@ -46,15 +66,46 @@ import { Gamepad2, Search, Home } from "lucide-astro";
         justify-content: center;
         text-decoration: none;
         color: var(--color-text-secondary);
-        font-family: var(--font-heading);
+        font-family: "Google Sans", sans-serif;
         font-size: 0.75rem;
+        font-weight: 500;
         gap: 4px;
         flex: 1;
         height: 100%;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .icon-container {
+        width: 64px;
+        height: 32px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s ease;
+    }
+
+    /* Active State - Pill Indicator */
+    .nav-item.active .icon-container {
+        background-color: #c2e7ff; /* Google Blue Tint */
+    }
+
+    [data-theme="dark"] .nav-item.active .icon-container {
+        background-color: #004a77; /* Dark mode tint */
     }
 
     .nav-item.active {
-        color: var(--color-primary);
+        color: var(--color-text);
+        font-weight: 600;
+    }
+
+    .nav-item.active svg {
+        color: #001d35; /* Dark blue icon on light pill */
+    }
+
+    [data-theme="dark"] .nav-item.active svg {
+        color: #c2e7ff; /* Light blue icon on dark pill */
     }
 
     .nav-item svg {

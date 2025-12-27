@@ -1,0 +1,170 @@
+---
+import { Check, X, Flag } from "lucide-astro";
+
+const weekDays = [
+    { day: "W", status: "missed", icon: "X" },
+    { day: "T", status: "active", icon: "Sonic" },
+    { day: "F", status: "active", icon: "Sonic" },
+    { day: "S", status: "future", icon: null },
+    { day: "S", status: "future", icon: null },
+    { day: "M", status: "future", icon: "Flag" },
+    { day: "T", status: "future", icon: null },
+];
+---
+
+<div class="streak-section">
+    <div class="section-header">
+        <h2>Build your streak</h2>
+        <div class="nav-arrows">
+            <span class="arrow-left">◄</span>
+            <span class="date-range">Dec 24 – 30</span>
+            <span class="arrow-right">►</span>
+        </div>
+    </div>
+
+    <div class="streak-grid">
+        {
+            weekDays.map((item) => (
+                <div class={`streak-day ${item.status}`}>
+                    <div class="day-circle">
+                        {item.status === "missed" && (
+                            <X size={20} color="#b45309" />
+                        )}
+                        {item.status === "active" && (
+                            <img
+                                src="/sonic_avatar.png"
+                                alt="Streak"
+                                class="streak-avatar"
+                                onerror="this.src='https://placehold.co/40x40/orange/white?text=S'"
+                            />
+                        )}
+                        {item.status === "future" && item.icon === "Flag" && (
+                            <Flag size={18} color="#4b5563" />
+                        )}
+                    </div>
+                    <span class="day-label">{item.day}</span>
+                </div>
+            ))
+        }
+    </div>
+
+    <div class="streak-footer">
+        <span class="streak-count">2-day streak</span>
+        <button class="see-more-btn">See more</button>
+    </div>
+</div>
+
+<style>
+    .streak-section {
+        background: var(--color-surface-hover);
+        padding: 1.5rem;
+        border-radius: 20px;
+        margin-bottom: 5rem; /* Space for bottom nav */
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .section-header h2 {
+        font-family: "Google Sans", sans-serif;
+        font-size: 1.25rem;
+        color: var(--color-text);
+        margin: 0;
+    }
+
+    .nav-arrows {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+        color: var(--color-text-secondary);
+        font-weight: 500;
+    }
+
+    .streak-grid {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+    }
+
+    .streak-day {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .day-circle {
+        width: 44px;
+        height: 44px; /* Default squareish with rounded corners from screenshot */
+        background: var(--color-surface); /* Grey placeholder background */
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid transparent;
+    }
+
+    .streak-day.future .day-circle {
+        background: #e5e7eb;
+    }
+    [data-theme="dark"] .streak-day.future .day-circle {
+        background: #374151;
+    }
+
+    .streak-day.missed .day-circle {
+        background: #fed7aa;
+        color: #ea580c;
+    }
+
+    .streak-day.active .day-circle {
+        border-color: #f97316; /* Orange border */
+        background: transparent;
+        padding: 2px;
+    }
+
+    .streak-avatar {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .day-label {
+        font-size: 0.8rem;
+        color: var(--color-text-secondary);
+        font-weight: 500;
+    }
+
+    .streak-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 0.5rem;
+    }
+
+    .streak-count {
+        font-weight: 500;
+        color: var(--color-text);
+    }
+
+    .see-more-btn {
+        background: #0b57d0; /* Google Blue */
+        color: white;
+        border: none;
+        padding: 0.5rem 1.25rem;
+        border-radius: 100px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    [data-theme="dark"] .see-more-btn {
+        background: #8ab4f8;
+        color: #0b57d0;
+    }
+</style>

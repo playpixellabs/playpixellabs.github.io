@@ -1,0 +1,138 @@
+---
+
+---
+
+<div class="prizes-card">
+    <div class="card-header">
+        <span class="badge">Ends on 1/8/26</span>
+    </div>
+
+    <div class="card-content">
+        <div class="visual-area">
+            <!-- Simulated 3D Shapes with CSS/SVG -->
+            <div class="shape cube"></div>
+            <div class="shape plus"></div>
+            <div class="shape sphere"></div>
+        </div>
+
+        <div class="text-area">
+            <h3>Get ₹10 towards an app or game</h3>
+            <p>Save this offer for your next purchase</p>
+        </div>
+
+        <button class="save-btn">Save</button>
+        <span class="terms">Terms apply</span>
+    </div>
+</div>
+
+<style>
+    .prizes-card {
+        background: linear-gradient(135deg, #d8baff 0%, #e9d5ff 100%);
+        border-radius: 24px;
+        padding: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 2rem;
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .badge {
+        background: rgba(255, 255, 255, 0.6);
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: #4a4a4a;
+    }
+
+    .visual-area {
+        height: 150px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Abstract shapes simulation */
+    .shape {
+        position: absolute;
+    }
+    .cube {
+        width: 60px;
+        height: 60px;
+        background: #ef4444;
+        transform: rotate(-15deg) translate(-40px, -20px);
+        border-radius: 12px;
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    .plus {
+        width: 100px;
+        height: 100px;
+        background: #3b82f6;
+        clip-path: polygon(
+            30% 0%,
+            70% 0%,
+            70% 30%,
+            100% 30%,
+            100% 70%,
+            70% 70%,
+            70% 100%,
+            30% 100%,
+            30% 70%,
+            0% 70%,
+            0% 30%,
+            30% 30%
+        );
+        z-index: 2;
+        box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+    }
+    .sphere {
+        width: 40px;
+        height: 40px;
+        background: #10b981;
+        border-radius: 50%;
+        transform: translate(60px, 10px);
+    }
+
+    .text-area h3 {
+        font-family: "Google Sans", sans-serif;
+        font-size: 1.4rem;
+        line-height: 1.2;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+        max-width: 80%;
+    }
+
+    .text-area p {
+        color: #4b5563;
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .save-btn {
+        background: #ffffff;
+        color: #1f2937;
+        border: none;
+        padding: 0.6rem 1.5rem;
+        border-radius: 100px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        align-self: flex-end; /* Mobile style usually absolute or float but grid nice here */
+        position: absolute;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .terms {
+        position: absolute;
+        bottom: 0.5rem;
+        right: 1.8rem;
+        font-size: 0.65rem;
+        color: #6b7280;
+    }
+</style>
