@@ -1,0 +1,104 @@
+---
+import GameCard from "./GameCard.astro";
+import { ArrowRight } from "lucide-astro";
+
+interface Props {
+    title: string;
+    games: any[];
+    cardSize?: "standard" | "feature";
+}
+
+const { title, games, cardSize = "standard" } = Astro.props;
+---
+
+<section class="game-row">
+    <div class="container">
+        <div class="row-header">
+            <h2>{title}</h2>
+            <a href="#" class="more-btn">
+                <ArrowRight size={24} />
+            </a>
+        </div>
+
+        <div class="scroll-container">
+            {
+                games.map((game) => (
+                    <div
+                        class={
+                            cardSize === "feature"
+                                ? "card-wrapper-feature"
+                                : "card-wrapper"
+                        }
+                    >
+                        <GameCard {...game} size={cardSize} />
+                    </div>
+                ))
+            }
+            <!-- Padding at end -->
+            <div class="spacer"></div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .game-row {
+        margin-bottom: 2rem;
+    }
+
+    .row-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    h2 {
+        font-size: 1.125rem;
+        margin: 0;
+        font-weight: 500;
+        color: var(--color-text);
+    }
+
+    .more-btn {
+        color: var(--color-text-secondary);
+        display: flex;
+        align-items: center;
+    }
+
+    .scroll-container {
+        display: flex;
+        overflow-x: auto;
+        gap: 1rem;
+        padding-bottom: 0.5rem;
+        /* Scrollbar hiding moved to global or kept here */
+        scrollbar-width: none;
+    }
+
+    .scroll-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .card-wrapper {
+        flex: 0 0 100px; /* Fixed width for standard icons */
+    }
+
+    @media (min-width: 600px) {
+        .card-wrapper {
+            flex: 0 0 140px;
+        }
+    }
+
+    .card-wrapper-feature {
+        flex: 0 0 85vw; /* Almost full width on mobile */
+    }
+
+    @media (min-width: 768px) {
+        .card-wrapper-feature {
+            flex: 0 0 400px;
+        }
+    }
+
+    .spacer {
+        flex: 0 0 0.5rem;
+    }
+</style>

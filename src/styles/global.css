@@ -1,46 +1,49 @@
 /* Global Styles */
-:root {
-    /* Default Dark Theme (Deep Purple/Blue) */
-    --color-bg: #0f0e17;
-    --color-surface: #1e1c2e;
-    --color-primary: #ff0080;
-    --color-secondary: #7928ca;
-    --color-accent: #0070f3;
-    --color-text: #fffffe;
-    --color-text-muted: #a7a9be;
-    --color-border: rgba(255, 255, 255, 0.1);
-    --glass-bg: rgba(30, 28, 46, 0.7);
-
-    --font-heading: 'Outfit', sans-serif;
-    --font-body: 'Inter', sans-serif;
-
-    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-    --shadow-glow: 0 0 20px rgba(121, 40, 202, 0.5);
+@font-face {
+    font-family: 'Google Sans';
+    src: url('https://fonts.gstatic.com/s/googlesans/v58/4UaGrENHsxJlGDuGo1OIlL3Owp5eKQtG.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Google Sans';
+    src: url('https://fonts.gstatic.com/s/googlesans/v58/4UabrENHsxJlGDuGo1OIlLU94YtzCw.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
 }
 
-[data-theme="light"] {
-    /* Light Theme (Crisp White/Blue/Pink) */
-    --color-bg: #f8fafc;
+:root {
+    /* Google Play Colors - Default (Dark Mode base on preference, but we structure variables first) */
+    
+    /* These values will be swapped by theme */
+    --color-bg: #ffffff;
     --color-surface: #ffffff;
-    --color-primary: #ec4899;
-    /* Pink-500 */
-    --color-secondary: #8b5cf6;
-    /* Violet-500 */
-    --color-accent: #3b82f6;
-    /* Blue-500 */
-    --color-text: #0f172a;
-    /* Slate-900 */
-    --color-text-muted: #64748b;
-    /* Slate-500 */
-    --color-border: rgba(0, 0, 0, 0.1);
-    --glass-bg: rgba(255, 255, 255, 0.7);
+    --color-surface-hover: #f5f5f5;
+    --color-text: #202124;
+    --color-text-secondary: #5f6368;
+    --color-primary: #01875f; /* Play Green */
+    --color-border: #dadce0;
+    
+    /* Shadows */
+    --shadow-card: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+    --shadow-none: none;
 
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-    --shadow-glow: 0 0 15px rgba(139, 92, 246, 0.3);
+    /* Fonts */
+    --font-heading: 'Google Sans', 'Roboto', sans-serif;
+    --font-body: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+[data-theme="dark"] {
+    --color-bg: #202124;
+    --color-surface: #202124;
+    --color-surface-hover: #303134;
+    --color-text: #e8eaed;
+    --color-text-secondary: #9aa0a6;
+    --color-primary: #01875f; /* Keep green or slightly adjust if needed, mostly kept same */
+    --color-border: #5f6368;
+    
+    /* Adjust shadow for dark mode visibility if needed, or rely on surface colors */
+    --shadow-card: 0 1px 2px 0 rgba(0,0,0,0.3), 0 1px 3px 1px rgba(0,0,0,0.15);
 }
 
 *,
@@ -49,15 +52,23 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
     font-family: var(--font-body);
     background-color: var(--color-bg);
     color: var(--color-text);
-    line-height: 1.6;
+    line-height: normal; /* Play store is dense */
     overflow-x: hidden;
     transition: background-color 0.3s ease, color 0.3s ease;
+    padding-bottom: 80px; /* Space for Bottom Nav on Mobile */
+}
+
+@media (min-width: 768px) {
+    body {
+        padding-bottom: 0;
+    }
 }
 
 h1,
@@ -67,20 +78,20 @@ h4,
 h5,
 h6 {
     font-family: var(--font-heading);
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 1rem;
+    font-weight: 500;
+    color: var(--color-text);
 }
 
 a {
     color: inherit;
     text-decoration: none;
-    transition: color 0.2s ease;
 }
 
 button {
     cursor: pointer;
-    font-family: inherit;
+    font-family: var(--font-heading);
+    border: none;
+    background: none;
 }
 
 /* Utilities */
@@ -90,40 +101,27 @@ button {
     padding: 0 1rem;
 }
 
-.glass {
-    background: var(--glass-bg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--color-border);
-    transition: background 0.3s ease, border-color 0.3s ease;
-}
-
-.gradient-text {
-    background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.grid-games {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 2rem;
-}
-
 /* Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--color-bg);
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--color-surface);
+    background: #dadce0;
     border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: var(--color-secondary);
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: #5f6368;
+}
+
+.icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }

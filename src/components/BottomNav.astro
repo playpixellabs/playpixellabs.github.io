@@ -1,0 +1,67 @@
+---
+import { Gamepad2, Search, Home } from "lucide-astro";
+---
+
+<nav class="bottom-nav">
+    <a href="/" class="nav-item active">
+        <Home size={24} />
+        <span>Home</span>
+    </a>
+    <a href="/games" class="nav-item">
+        <Gamepad2 size={24} />
+        <span>Games</span>
+    </a>
+    <a href="/search" class="nav-item">
+        <Search size={24} />
+        <span>Search</span>
+    </a>
+</nav>
+
+<style>
+    .bottom-nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 60px; /* Standard height */
+        background-color: var(--color-surface);
+        border-top: 1px solid var(--color-border);
+        z-index: 1000;
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    @media (min-width: 768px) {
+        .bottom-nav {
+            display: none;
+        }
+    }
+
+    .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: var(--color-text-secondary);
+        font-family: var(--font-heading);
+        font-size: 0.75rem;
+        gap: 4px;
+        flex: 1;
+        height: 100%;
+    }
+
+    .nav-item.active {
+        color: var(--color-primary);
+    }
+
+    .nav-item svg {
+        transition: transform 0.2s ease;
+    }
+
+    .nav-item:active svg {
+        transform: scale(0.9);
+    }
+</style>

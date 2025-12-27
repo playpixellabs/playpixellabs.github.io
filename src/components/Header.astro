@@ -1,120 +1,653 @@
 ---
-import { Search, Menu, Gamepad2 } from "lucide-astro";
+import { Search, Bell, User, ArrowLeft, X } from "lucide-astro";
 import ThemeToggle from "./ThemeToggle.astro";
+import { games } from "../data/games";
 ---
 
-<header class="header glass">
-    <div class="container header-content">
-        <a href="/" class="logo">
-            <div class="logo-icon">
-                <Gamepad2 size={24} />
+<header class="header-container">
+    <!-- Top Bar: Logo, Search, Actions -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-content">
+                <!-- Left: Logo -->
+                <div class="left-section" id="left-section">
+                    <a href="/" class="logo-area">
+                        <img
+                            src="/logo.svg"
+                            alt="PlayPixelLabs"
+                            width="32"
+                            height="32"
+                        />
+                        <span class="logo-text">PlayPixelLabs</span>
+                    </a>
+                </div>
+
+                <!-- Center/Right: Search -->
+                <div class="search-section" id="search-container">
+                    <!-- Mobile Search Trigger -->
+                    <button class="search-trigger-btn" id="search-trigger">
+                        <Search size={22} color="var(--color-text-secondary)" />
+                    </button>
+
+                    <!-- Expendable Search Bar -->
+                    <div
+                        class="search-bar-wrapper hidden"
+                        id="search-bar-wrapper"
+                    >
+                        <button
+                            class="icon-btn search-back-btn"
+                            id="search-close"
+                        >
+                            <ArrowLeft
+                                size={22}
+                                color="var(--color-text-secondary)"
+                            />
+                        </button>
+
+                        <div class="search-bar">
+                            <div class="search-icon-static">
+                                <Search
+                                    size={20}
+                                    color="var(--color-text-secondary)"
+                                />
+                            </div>
+                            <input
+                                type="text"
+                                id="search-input"
+                                placeholder="Search apps & games"
+                                autocomplete="off"
+                            />
+                            <button class="clear-btn hidden" id="search-clear">
+                                <X
+                                    size={20}
+                                    color="var(--color-text-secondary)"
+                                />
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Search Results (Absolute) -->
+                    <div class="search-results hidden" id="search-results">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Right: Actions -->
+                <div class="actions-section" id="actions-section">
+                    <ThemeToggle />
+                    <button
+                        class="icon-btn tooltip mobile-hidden"
+                        aria-label="Help"
+                    >
+                        <span class="help-icon">?</span>
+                    </button>
+                    <button class="icon-btn tooltip" aria-label="Notifications">
+                        <Bell size={22} />
+                    </button>
+                    <button class="user-btn">
+                        <User size={20} />
+                    </button>
+                </div>
             </div>
-            <span class="logo-text"
-                >pixel<span class="highlight">Play</span></span
-            >
-        </a>
-
-        <div class="search-bar">
-            <Search size={20} class="search-icon" />
-            <input type="text" placeholder="Search games and genres" />
         </div>
-
-        <nav class="desktop-nav">
-            <a href="/playlists">Playlists</a>
-            <ThemeToggle />
-            <button class="menu-btn">
-                <Menu size={24} />
-            </button>
-        </nav>
     </div>
+
+    <!-- Desktop Navigation (Games, Apps, Movies...) -->
+    <div class="desktop-nav-bar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="/" class="nav-link active">Games</a>
+                <a href="/apps" class="nav-link">Apps</a>
+                <a href="/movies" class="nav-link">Movies</a>
+                <a href="/books" class="nav-link">Books</a>
+                <a href="/kids" class="nav-link">Kids</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sub-Navigation (For you, Top charts...) - Sticky on Mobile -->
+    <!-- <div class="sub-nav-bar">
+        <div class="container">
+            <div class="sub-nav-content">
+                <a href="/" class="sub-link active">For you</a>
+                <a href="/top-charts" class="sub-link">Top charts</a>
+                <a href="/kids" class="sub-link">Kids</a>
+                <a href="/premium" class="sub-link">Premium</a>
+                <a href="/categories" class="sub-link">Categories</a>
+                <a href="/editors-choice" class="sub-link">Editors' Choice</a>
+            </div>
+        </div>
+    </div> -->
 </header>
 
+<script define:vars={{ games }}>
+    const searchTrigger = document.getElementById("search-trigger");
+    const searchBarWrapper = document.getElementById("search-bar-wrapper");
+    const searchClose = document.getElementById("search-close");
+    const searchInput = document.getElementById("search-input");
+    const searchResults = document.getElementById("search-results");
+    const clearBtn = document.getElementById("search-clear");
+    const searchContainer = document.getElementById("search-container");
+    const leftSection = document.getElementById("left-section");
+    const actionsSection = document.getElementById("actions-section");
+
+    // Toggle Search ON
+    searchTrigger?.addEventListener("click", () => {
+        searchBarWrapper?.classList.remove("hidden");
+        searchTrigger.classList.add("hidden");
+        searchContainer.classList.add("expanded");
+
+        // Hide other elements on mobile to make space
+        if (window.innerWidth < 768) {
+            leftSection.style.display = "none";
+            actionsSection.style.display = "none";
+        }
+
+        searchInput?.focus();
+    });
+
+    // Toggle Search OFF
+    searchClose?.addEventListener("click", () => {
+        closeSearch();
+    });
+
+    function closeSearch() {
+        searchBarWrapper?.classList.add("hidden");
+        searchTrigger?.classList.remove("hidden");
+        searchContainer?.classList.remove("expanded");
+
+        if (window.innerWidth < 768) {
+            leftSection.style.display = "flex";
+            actionsSection.style.display = "flex";
+        }
+
+        searchResults?.classList.add("hidden");
+        if (searchInput) searchInput.value = "";
+    }
+
+    // Search Logic
+    searchInput?.addEventListener("input", (e) => {
+        const query = e.target.value.toLowerCase();
+        if (query.length > 0) {
+            clearBtn?.classList.remove("hidden");
+            const results = games.filter(
+                (g) =>
+                    g.title.toLowerCase().includes(query) ||
+                    g.category.toLowerCase().includes(query),
+            );
+
+            if (results.length > 0) {
+                searchResults.classList.remove("hidden");
+                searchResults.innerHTML = results
+                    .map(
+                        (g) => `
+                    <a href="/play/${g.slug}" class="search-item">
+                        <img src="${g.image}" alt="${g.title}" />
+                        <div>
+                            <div class="search-title">${g.title}</div>
+                            <div class="search-cat">${g.category}</div>
+                        </div>
+                    </a>
+                 `,
+                    )
+                    .join("");
+            } else {
+                searchResults.classList.remove("hidden");
+                searchResults.innerHTML = `<div class="no-results">No results for "${query.replace(/</g, "")}"</div>`;
+            }
+        } else {
+            clearBtn?.classList.add("hidden");
+            searchResults.classList.add("hidden");
+        }
+    });
+
+    clearBtn?.addEventListener("click", () => {
+        searchInput.value = "";
+        searchResults.classList.add("hidden");
+        clearBtn.classList.add("hidden");
+        searchInput.focus();
+    });
+
+    // Close on click outside
+    document.addEventListener("click", (e) => {
+        if (
+            !searchContainer?.contains(e.target) &&
+            !searchTrigger?.contains(e.target)
+        ) {
+            searchResults?.classList.add("hidden");
+        }
+    });
+</script>
+
 <style>
-    .header {
+    /* Main Container */
+    .header-container {
+        display: contents; /* Mobile: Unbox so children can stick relative to body */
+        /* background-color: var(--color-surface); <-- moving bg to children */
+    }
+
+    /* Top Bar */
+    .top-bar {
+        height: 60px;
+        background-color: var(--color-surface);
+        position: relative; /* Scrolls away on mobile */
+        z-index: 1001;
+        width: 100%;
+    }
+
+    .top-bar .container {
+        height: 100%;
+    }
+
+    .top-bar-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        gap: 0.5rem;
+    }
+
+    /* ... (Left, Search, Actions sections remain similar) ... */
+
+    /* Desktop Navigation (Rebranded as Main Nav for Mobile too) */
+    .desktop-nav-bar {
+        display: block;
+        background-color: var(--color-surface);
+        border-bottom: 1px solid var(--color-border);
         position: sticky;
         top: 0;
-        z-index: 100;
-        padding: 1rem 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 1000;
     }
 
-    .header-content {
+    @media (min-width: 900px) {
+        .header-container {
+            display: block; /* Restore container for desktop */
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: var(--color-surface);
+        }
+
+        /* Reset child stickiness if parent is sticky */
+        .desktop-nav-bar {
+            position: static;
+        }
+    }
+
+    /* Left Section */
+    .left-section {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 2rem;
+        min-width: max-content;
     }
 
-    .logo {
+    .logo-area {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        font-family: var(--font-heading);
-        font-weight: 700;
-        font-size: 1.5rem;
+        text-decoration: none;
     }
 
-    .logo-icon {
-        background: white;
-        color: var(--color-primary);
-        padding: 0.5rem;
+    .logo-text {
+        font-family: "Google Sans", sans-serif;
+        font-size: 1.35rem;
+        color: var(--color-text-secondary);
+        letter-spacing: -0.5px;
+        display: none;
+    }
+
+    @media (min-width: 360px) {
+        .logo-text {
+            display: block;
+        }
+    }
+
+    /* Search Section */
+    .search-section {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        flex: 1;
+    }
+
+    .search-section.expanded {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: var(--color-surface);
+        padding: 0 1rem;
+        z-index: 1002;
+    }
+
+    /* Desktop: Center search bar */
+    @media (min-width: 900px) {
+        .search-section {
+            flex: 0 1 700px;
+            margin: 0 2rem;
+            justify-content: flex-start;
+        }
+
+        .search-trigger-btn {
+            display: none;
+        }
+        .search-bar-wrapper.hidden {
+            display: flex !important;
+        }
+        .search-bar-wrapper {
+            width: 100%;
+            position: relative;
+        }
+        .search-back-btn {
+            display: none;
+        }
+        .search-section.expanded {
+            position: relative;
+            padding: 0;
+        }
+
+        .search-bar {
+            background: var(--color-surface-hover);
+            height: 46px;
+        }
+    }
+
+    .search-trigger-btn {
+        padding: 0.6rem;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: var(--color-text-secondary);
         border-radius: 50%;
+    }
+    .search-trigger-btn:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .search-bar-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+    }
+
+    .search-bar {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        background: var(--color-surface-hover);
+        height: 48px;
+        border-radius: 8px;
+        padding: 0 0.5rem;
+        transition:
+            background 0.2s,
+            box-shadow 0.2s;
+    }
+
+    .search-bar:focus-within {
+        background: var(--color-surface);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .search-bar input {
+        border: none;
+        background: transparent;
+        flex: 1;
+        height: 100%;
+        margin-left: 0.5rem;
+        color: var(--color-text);
+        font-size: 1rem;
+        outline: none;
+    }
+
+    .search-icon-static {
+        display: flex;
+        align-items: center;
+    }
+
+    /* Results */
+    .search-results {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--color-surface);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        max-height: 400px;
+        overflow-y: auto;
+        border-radius: 0 0 16px 16px;
+        padding: 0.75rem; /* Space for grid gap */
+        z-index: 2000;
+        border: 1px solid var(--color-border);
+        border-top: none;
+        margin-top: 4px; /* Slight offset from bar */
+
+        display: grid;
+        grid-template-columns: repeat(
+            auto-fill,
+            minmax(240px, 1fr)
+        ); /* Responsive Grid */
+        gap: 0.5rem;
+    }
+
+    /* On Mobile Expanded, results take full screen below */
+    @media (max-width: 899px) {
+        .search-results {
+            position: fixed;
+            top: 60px;
+            bottom: 0px;
+            max-height: none;
+            border-radius: 0;
+            border: none;
+            box-shadow: none;
+            margin-top: 0;
+            display: flex; /* Stack on mobile for easier reach */
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+    }
+
+    .search-item {
+        display: flex;
+        gap: 0.75rem;
+        padding: 0.75rem;
+        text-decoration: none;
+        color: var(--color-text);
+        align-items: center;
+        transition: all 0.2s ease;
+        border-radius: 12px; /* Card shape */
+        background-color: transparent; /* Default */
+        border: 1px solid transparent;
+    }
+
+    /* Desktop Hover: Card effect */
+    @media (min-width: 900px) {
+        .search-item:hover,
+        .search-item:focus {
+            background-color: var(
+                --color-surface
+            ); /* Keep surface but add shadow/border */
+            background-color: var(--color-bg); /* Or slightly different */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-color: var(--color-border);
+            transform: translateY(-1px);
+        }
+        /* Mobile hover state is usually touch active, handled simpler below */
+    }
+
+    /* Mobile Interaction */
+    @media (max-width: 899px) {
+        .search-item {
+            border-radius: 8px;
+            background-color: var(--color-surface);
+        }
+        .search-item:active {
+            background-color: var(--color-surface-hover);
+        }
+    }
+
+    .search-item img {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        object-fit: cover;
+        background-color: var(--color-surface-hover); /* Placeholder bg */
+    }
+
+    .search-title {
+        font-weight: 500;
+        font-size: 0.95rem;
+        font-family: "Google Sans", sans-serif;
+        margin-bottom: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+    .search-cat {
+        font-size: 0.75rem;
+        color: var(--color-text-secondary);
+    }
+    .no-results {
+        grid-column: 1 / -1; /* Span full width */
+        padding: 2rem;
+        text-align: center;
+        color: var(--color-text-secondary);
+        font-size: 0.9rem;
+        font-style: italic;
+    }
+
+    /* Actions */
+    .actions-section {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .icon-btn {
+        padding: 0.6rem;
+        border-radius: 50%;
+        color: var(--color-text-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .icon-btn:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .help-icon {
+        font-weight: bold;
+        border: 2px solid currentColor;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+    }
+
+    .user-btn {
+        width: 32px;
+        height: 32px;
+        background: var(--color-primary);
+        color: white;
+        border-radius: 50%;
+        border: none;
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
-    .logo-text {
-        color: var(--color-text);
-    }
-
-    .highlight {
-        color: var(--color-text-muted); /* Or maybe white/bold */
-        font-weight: 900;
-    }
-
-    .search-bar {
-        flex: 1;
-        max-width: 500px;
-        position: relative;
-        display: none; /* Hidden on mobile initially */
-    }
-
-    @media (min-width: 768px) {
-        .search-bar {
-            display: block;
-        }
-    }
-
-    .search-bar input {
-        width: 100%;
-        padding: 0.75rem 1rem 0.75rem 3rem;
-        border-radius: 50px;
-        border: none;
-        background: rgba(255, 255, 255, 0.9);
-        color: #333;
-        font-family: var(--font-body);
-        font-size: 1rem;
-    }
-
-    .search-icon {
-        position: absolute;
-        left: 1rem;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #666;
-    }
-
-    .desktop-nav {
+    .nav-content {
         display: flex;
-        align-items: center;
-        gap: 1.5rem;
+        gap: 2rem;
+        padding-left: 1rem;
+        overflow-x: auto; /* Scrollable on mobile */
+        scrollbar-width: none;
+    }
+    .nav-content::-webkit-scrollbar {
+        display: none;
     }
 
-    .menu-btn {
-        background: none;
-        border: none;
-        color: var(--color-text);
-        display: none; /* Hidden on desktop if not needed, or visible for drawer */
+    .nav-link {
+        padding: 0.8rem 0;
+        color: var(--color-text-secondary);
+        font-weight: 500;
+        font-family: "Google Sans", sans-serif;
+        font-size: 0.9rem;
+        position: relative;
+    }
+    .nav-link.active {
+        color: var(--color-primary);
+    }
+    .nav-link.active::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--color-primary);
+        border-radius: 3px 3px 0 0;
+    }
+
+    /* Sub Navigation */
+    .sub-nav-bar {
+        background: var(--color-surface);
+        border-bottom: 1px solid var(--color-border);
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .sub-nav-content {
+        display: flex;
+        gap: 1rem;
+        overflow-x: auto;
+        padding: 0.5rem 1rem;
+        scrollbar-width: none;
+    }
+    .sub-nav-content::-webkit-scrollbar {
+        display: none;
+    }
+
+    .sub-link {
+        white-space: nowrap;
+        padding: 0.4rem 0.8rem;
+        border-radius: 100px;
+        font-size: 0.9rem;
+        color: var(--color-text-secondary);
+        font-family: "Google Sans", sans-serif;
+        font-weight: 500;
+        transition: background 0.2s;
+        border: 1px solid var(--color-border);
+    }
+
+    .sub-link.active {
+        background: #e6f3ef;
+        color: var(--color-primary);
+        border-color: transparent;
+    }
+
+    [data-theme="dark"] .sub-link.active {
+        background: #133a30;
+        color: #81c995;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+    .mobile-hidden {
+        display: none;
+    }
+    @media (min-width: 900px) {
+        .mobile-hidden {
+            display: flex;
+        }
     }
 </style>

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#01875f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#016e4f;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Pixelated Play Triangle -->
+  <path d="M96 64 V448 L416 256 Z" fill="url(#grad1)" style="display:none" /> <!-- Reference Shape -->
+  
+  <!-- Pixels -->
+  <g fill="#01875f">
+      <!-- Row 1 -->
+      <rect x="96" y="64" width="32" height="32" />
+      
+      <!-- Row 2 -->
+      <rect x="96" y="96" width="32" height="32" />
+      
+      <!-- Row 3 -->
+      <rect x="96" y="128" width="32" height="32" />
+      <rect x="128" y="128" width="32" height="32" />
+
+      <!-- Row 4 -->
+      <rect x="96" y="160" width="32" height="32" />
+      <rect x="128" y="160" width="32" height="32" />
+      <rect x="160" y="160" width="32" height="32" />
+
+      <!-- Row 5 (Center Top) -->
+      <rect x="96" y="192" width="32" height="32" />
+      <rect x="128" y="192" width="32" height="32" />
+      <rect x="160" y="192" width="32" height="32" />
+      <rect x="192" y="192" width="32" height="32" />
+
+      <!-- Row 6 (Middle) -->
+      <rect x="96" y="224" width="32" height="32" />
+      <rect x="128" y="224" width="32" height="32" />
+      <rect x="160" y="224" width="32" height="32" />
+      <rect x="192" y="224" width="32" height="32" />
+      <rect x="224" y="224" width="32" height="32" />
+      <rect x="256" y="240" width="32" height="32" /> <!-- Tip -->
+
+      <!-- Row 7 (Mirror 5) -->
+      <rect x="96" y="256" width="32" height="32" />
+      <rect x="128" y="256" width="32" height="32" />
+      <rect x="160" y="256" width="32" height="32" />
+      <rect x="192" y="256" width="32" height="32" />
+      <rect x="224" y="256" width="32" height="32" />
+
+      <!-- Row 8 -->
+      <rect x="96" y="288" width="32" height="32" />
+      <rect x="128" y="288" width="32" height="32" />
+      <rect x="160" y="288" width="32" height="32" />
+      <rect x="192" y="288" width="32" height="32" />
+
+      <!-- Row 9 -->
+      <rect x="96" y="320" width="32" height="32" />
+      <rect x="128" y="320" width="32" height="32" />
+      <rect x="160" y="320" width="32" height="32" />
+
+      <!-- Row 10 -->
+      <rect x="96" y="352" width="32" height="32" />
+      <rect x="128" y="352" width="32" height="32" />
+
+      <!-- Row 11 -->
+      <rect x="96" y="384" width="32" height="32" />
+      <rect x="96" y="416" width="32" height="32" />
+  </g>
+  
+  <!-- Accent Pixels (Blue/Red/Yellow like Play Store) -->
+  <rect x="160" y="128" width="32" height="32" fill="#3b82f6" opacity="0.8" />
+  <rect x="128" y="384" width="32" height="32" fill="#ef4444" opacity="0.8" />
+  <rect x="224" y="192" width="32" height="32" fill="#eab308" opacity="0.8" />
+
+</svg>

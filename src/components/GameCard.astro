@@ -1,12 +1,11 @@
 ---
-import { Play } from "lucide-astro";
-
 interface Props {
     title: string;
     category: string;
     image: string;
     slug: string;
-    color?: string;
+    rating?: number;
+    size?: "standard" | "feature";
 }
 
 const {
@@ -14,108 +13,125 @@ const {
     category,
     image,
     slug,
-    color = "var(--color-primary)",
+    rating = 4.5,
+    size = "standard",
 } = Astro.props;
 ---
 
-<a href={`/play/${slug}`} class="game-card">
+<a href={`/play/${slug}`} class={`game-card ${size}`}>
     <div class="image-wrapper">
         <img src={image} alt={title} loading="lazy" />
-        <div class="overlay">
-            <button class="play-btn">
-                <Play fill="white" size={24} />
-                Play
-            </button>
-        </div>
     </div>
     <div class="content">
-        <h3>{title}</h3>
-        <p>{category}</p>
+        <h3 class="title" title={title}>{title}</h3>
+        {size === "standard" && <p class="category">{category}</p>}
+        {
+            size === "standard" && (
+                <div class="rating">
+                    <span>{rating}</span>
+                    <span class="star">★</span>
+                </div>
+            )
+        }
     </div>
 </a>
 
 <style>
     .game-card {
-        display: block;
-        border-radius: 16px;
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        color: inherit;
+        width: 100%;
+        /* No hover transform on play store */
+    }
+
+    /* Standard Card (App Icon style) */
+    .game-card.standard {
+        gap: 0.5rem;
+    }
+
+    .game-card.standard .image-wrapper {
+        aspect-ratio: 1;
+        border-radius: 20%; /* Squircle ish */
         overflow: hidden;
-        background: var(--color-surface);
-        transition:
-            transform 0.3s ease,
-            box-shadow 0.3s ease;
-        position: relative;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        background-color: var(--color-surface-hover);
     }
 
-    .game-card:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-glow);
-        z-index: 1;
-    }
-
-    .image-wrapper {
-        position: relative;
-        aspect-ratio: 1; /* Square cards as per design */
-        overflow: hidden;
-    }
-
-    .image-wrapper img {
+    .game-card.standard img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.5s ease;
+        transition: opacity 0.3s;
+    }
+    .game-card.standard:hover img {
+        opacity: 0.9;
     }
 
-    .game-card:hover .image-wrapper img {
-        transform: scale(1.1);
+    .game-card.standard .title {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--color-text);
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
-    .overlay {
+    .game-card.standard .category {
+        font-size: 0.75rem;
+        color: var(--color-text-secondary);
+        margin: 0;
+    }
+
+    .game-card.standard .rating {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        font-size: 0.75rem;
+        color: var(--color-text-secondary);
+        margin-top: 2px;
+    }
+
+    .rating .star {
+        font-size: 0.6rem;
+    }
+
+    /* Feature Card (Wide Banner) */
+    .game-card.feature {
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+        aspect-ratio: 16 / 9;
+        box-shadow: var(--shadow-card);
+    }
+
+    .game-card.feature .image-wrapper {
+        width: 100%;
+        height: 100%;
+    }
+
+    .game-card.feature img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .game-card.feature .content {
         position: absolute;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.4);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .game-card:hover .overlay {
-        opacity: 1;
-    }
-
-    .play-btn {
-        background: var(--color-primary);
-        color: white;
-        border: none;
-        padding: 0.75rem 1.5rem;
-        border-radius: 50px;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-weight: 700;
-        font-size: 1rem;
-        transform: translateY(20px);
-        transition: transform 0.3s ease;
-    }
-
-    .game-card:hover .play-btn {
-        transform: translateY(0);
-    }
-
-    .content {
+        bottom: 0;
+        left: 0;
+        right: 0;
         padding: 1rem;
-        text-align: center;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        color: white; /* Always white on feature cards */
     }
 
-    h3 {
+    .game-card.feature .title {
+        font-style: normal;
+        font-weight: 500;
         font-size: 1.1rem;
-        margin-bottom: 0.25rem;
         color: white;
-    }
-
-    p {
-        font-size: 0.9rem;
-        color: var(--color-text-muted);
     }
 </style>

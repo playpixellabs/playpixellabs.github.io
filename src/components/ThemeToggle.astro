@@ -9,73 +9,75 @@ import { Sun, Moon } from "lucide-astro";
 
 <style>
     .theme-toggle {
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: var(--color-text);
+        background: transparent;
+        border: none;
+        color: var(--color-text-secondary);
         padding: 0.5rem;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: background-color 0.3s ease;
     }
 
     .theme-toggle:hover {
-        background: rgba(255, 255, 255, 0.2);
+        background-color: rgba(0, 0, 0, 0.05);
     }
 
-    /* Default (Dark): Show Sun, Hide Moon */
+    [data-theme="dark"] .theme-toggle:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Logic: Default CSS is LIGHT. Dark mode is opt-in via data-theme="dark" */
+
+    /* In Light Mode (default): Show Moon (to switch to dark), Hide Sun */
     .sun-icon {
-        display: block;
+        display: none;
     }
     .moon-icon {
-        display: none;
+        display: block;
     }
 
-    /* Light Theme: Hide Sun, Show Moon */
-    :global([data-theme="light"]) .sun-icon {
-        display: none;
-    }
-    :global([data-theme="light"]) .moon-icon {
+    /* In Dark Mode: Show Sun (to switch to light), Hide Moon */
+    :global([data-theme="dark"]) .sun-icon {
         display: block;
+    }
+    :global([data-theme="dark"]) .moon-icon {
+        display: none;
     }
 </style>
 
 <script is:inline>
-    const theme = (() => {
+    const getTheme = () => {
         if (
             typeof localStorage !== "undefined" &&
             localStorage.getItem("theme")
         ) {
             return localStorage.getItem("theme");
         }
-        if (window.matchMedia("(prefers-color-scheme: light)").matches) {
-            return "light";
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            return "dark";
         }
-        return "dark";
-    })();
-
-    if (theme === "light") {
-        document.documentElement.setAttribute("data-theme", "light");
-    } else {
-        document.documentElement.removeAttribute("data-theme");
-    }
-
-    window.localStorage.setItem("theme", theme);
-
-    const handleToggleClick = () => {
-        const element = document.documentElement;
-        if (element.getAttribute("data-theme") === "light") {
-            element.removeAttribute("data-theme");
-            localStorage.setItem("theme", "dark");
-        } else {
-            element.setAttribute("data-theme", "light");
-            localStorage.setItem("theme", "light");
-        }
+        return "light";
     };
 
-    document
-        .getElementById("theme-toggle")
-        ?.addEventListener("click", handleToggleClick);
+    const setTheme = (theme) => {
+        if (theme === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+        localStorage.setItem("theme", theme);
+    };
+
+    // Initialize
+    setTheme(getTheme());
+
+    // Toggle
+    document.getElementById("theme-toggle")?.addEventListener("click", () => {
+        const current = getTheme();
+        const next = current === "dark" ? "light" : "dark";
+        setTheme(next);
+    });
 </script>
