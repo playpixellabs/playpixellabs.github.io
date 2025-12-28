@@ -161,14 +161,16 @@ const suggestions = [
     .sponsored-card {
         display: flex;
         gap: 1rem;
-        background: var(--color-surface-hover); /* Wait, play store design is usually clean white/surface but generic card look */
-        /* Actually in screenshot it looks like a clean item row but maybe slightly showcased */
+        background: var(--color-surface-hover); 
+        padding: 0.5rem;
+        border-radius: 12px;
     }
 
     .app-icon-large {
         width: 64px;
         height: 64px;
-        background: #facc15; /* Yellow blinkit color */
+        min-width: 64px; /* Prevent shrink */
+        background: #facc15; 
         border-radius: 12px;
         display: flex;
         align-items: center;
@@ -223,7 +225,7 @@ const suggestions = [
 
     .category-card {
         background: var(--color-surface-hover);
-        padding: 1rem; /* Height looks balanced */
+        padding: 1rem; 
         border-radius: 12px;
         display: flex;
         justify-content: space-between;
@@ -240,7 +242,7 @@ const suggestions = [
     .cat-icon-wrapper {
         width: 40px;
         height: 40px;
-        border-radius: 8px; /* Or custom shape */
+        border-radius: 8px; 
         display: flex;
         align-items: center;
         justify-content: center;
@@ -248,4 +250,34 @@ const suggestions = [
     .cat-icon {
         font-size: 1.25rem;
     }
-</style>
+
+    /* Mobile Responsiveness */
+    @media (max-width: 360px) {
+        .suggestions-grid,
+        .categories-grid {
+            grid-template-columns: 1fr; /* Stack on very small screens */
+            gap: 0.5rem;
+        }
+
+        .category-card,
+        .suggestion-item {
+            height: auto;
+            min-height: 60px;
+            padding: 0.75rem;
+        }
+
+        .cat-label,
+        .suggestion-item span {
+            font-size: 0.85rem;
+        }
+
+        .app-icon-large {
+            width: 56px;
+            height: 56px;
+            min-width: 56px;
+        }
+        
+        .app-details h3 {
+            font-size: 0.95rem;
+        }
+    }
