@@ -1,33 +1,42 @@
 ---
 import { Gamepad2, LayoutGrid, Search, Book, User } from "lucide-astro";
+
+const { pathname } = Astro.url;
+const isActive = (path) => {
+    if (path === "/") return pathname === "/";
+    return pathname.startsWith(path);
+};
 ---
 
 <nav class="bottom-nav">
-    <a href="/" class="nav-item active">
+    <a href="/" class={`nav-item ${isActive("/") ? "active" : ""}`}>
         <div class="icon-container">
             <Gamepad2 size={24} />
         </div>
         <span>Games</span>
     </a>
-    <a href="/apps" class="nav-item">
+    <a href="/apps" class={`nav-item ${isActive("/apps") ? "active" : ""}`}>
         <div class="icon-container">
             <LayoutGrid size={24} />
         </div>
         <span>Apps</span>
     </a>
-    <a href="/search" class="nav-item">
+    <a href="/search" class={`nav-item ${isActive("/search") ? "active" : ""}`}>
         <div class="icon-container">
             <Search size={24} />
         </div>
         <span>Search</span>
     </a>
-    <a href="/books" class="nav-item">
+    <a href="/books" class={`nav-item ${isActive("/books") ? "active" : ""}`}>
         <div class="icon-container">
             <Book size={24} />
         </div>
         <span>Books</span>
     </a>
-    <a href="/profile" class="nav-item">
+    <a
+        href="/profile"
+        class={`nav-item ${isActive("/profile") ? "active" : ""}`}
+    >
         <div class="icon-container">
             <User size={24} />
         </div>
