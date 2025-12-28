@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import SearchHeader from "../components/search/SearchHeader.astro";
 import DiscoverySection from "../components/search/DiscoverySection.astro";
+/* Force HMR */
 ---
 
 <Layout title="Search - PlayPixelLabs">
@@ -17,5 +18,6 @@ import DiscoverySection from "../components/search/DiscoverySection.astro";
         max-width: 600px;
         margin: 0 auto;
         padding-bottom: 80px; /* Nav bar space */
+        padding-top: 100px; /* Header space: 52px input + 2rem padding + gap */
     }
 </style>

@@ -1,6 +1,7 @@
 ---
 import { Search, Mic, X } from "lucide-astro";
 import { games } from "../../data/games";
+import ThemeToggle from "../ThemeToggle.astro";
 ---
 
 <div class="search-page-header">
@@ -17,24 +18,32 @@ import { games } from "../../data/games";
             <button class="clear-btn hidden" id="page-search-clear">
                 <X size={20} color="var(--color-text-secondary)" />
             </button>
-            <!-- <Mic
-                size={22}
-                color="var(--color-text-secondary)"
-                class="mic-icon"
-            /> -->
         </div>
 
         <!-- Search Results Dropdown -->
         <div class="page-search-results hidden" id="page-search-results"></div>
     </div>
 
-    <!-- <div class="user-avatar-small">A</div> -->
+    <!-- Theme Toggle -->
+    <div class="actions">
+        <ThemeToggle />
+    </div>
 </div>
 
 <script define:vars={{ games }}>
     const searchInput = document.getElementById("page-search-input");
     const searchResults = document.getElementById("page-search-results");
     const clearBtn = document.getElementById("page-search-clear");
+    const header = document.querySelector(".search-page-header");
+
+    // Add scroll shadow effect
+    window.addEventListener("scroll", () => {
+        if (window.scrollY > 0) {
+            header?.classList.add("scrolled");
+        } else {
+            header?.classList.remove("scrolled");
+        }
+    });
 
     searchInput?.addEventListener("input", (e) => {
         const query = e.target.value.toLowerCase();
@@ -103,12 +112,33 @@ import { games } from "../../data/games";
 <style>
     .search-page-header {
         display: flex;
-        align-items: flex-start;
+        justify-content: center;
+        align-items: center;
         gap: 1rem;
-        margin-bottom: 2rem;
-        position: relative;
-        z-index: 50; /* Ensure search results go over content */
+        padding-bottom: 1rem;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background-color: var(--color-bg);
+        transition: box-shadow 0.2s;
+        /* Padding to balance */
+        padding-top: 1rem;
+        /* Negative margins to span full width if parent has padding */
+        margin-left: -1rem;
+        margin-right: -1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
+
+    .search-page-header.scrolled {
+        box-shadow: 0 4px 20px -10px rgba(0, 0, 0, 0.1);
+        margin-left: -1rem; /* Hacky expansion if inside container padding */
+        margin-right: -1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    /* Better sticky handling: If body/main has padding */
 
     .search-input-wrapper {
         flex: 1;

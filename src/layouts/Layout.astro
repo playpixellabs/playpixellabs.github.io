@@ -63,7 +63,7 @@ const { title } = Astro.props;
         <ViewTransitions />
     </head>
     <body transition:animate="none">
-        <div transition:animate="fade">
+        <div transition:animate="fade" style="display: contents">
             <slot />
         </div>
         <BottomNav />
